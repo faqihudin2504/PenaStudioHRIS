@@ -37,6 +37,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     loadTableKaryawan();
     
     }
+    private String idKaryawanTerpilih = "";
     
     private void loadDataDashboard() {
     try {
@@ -653,10 +654,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
         btnSimpan.addActionListener(this::btnSimpanActionPerformed);
 
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(this::btnEditActionPerformed);
 
         btnHapus.setText("Hapus");
+        btnHapus.addActionListener(this::btnHapusActionPerformed);
 
         btnReset.setText("Reset");
+        btnReset.addActionListener(this::btnResetActionPerformed);
 
         lblAksi.setText("Aksi");
 
@@ -671,6 +675,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblKaryawanMouseClicked(evt);
+            }
+        });
         scrKaryawan.setViewportView(tblKaryawan);
 
         javax.swing.GroupLayout pnlKaryawanLayout = new javax.swing.GroupLayout(pnlKaryawan);
@@ -901,6 +910,103 @@ public class DashboardAdmin extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data (Mungkin Username sudah terpakai):\n" + e.getMessage());
     }
     }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void tblKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKaryawanMouseClicked
+            // Mengambil nomor baris yang diklik
+    int baris = tblKaryawan.rowAtPoint(evt.getPoint());
+
+    if (baris != -1) {
+        // Mengambil data dari kolom tabel (Kolom 0 = ID, Kolom 1 = Nama, Kolom 2 = Username)
+        idKaryawanTerpilih = tblKaryawan.getValueAt(baris, 0).toString();
+        txtNama.setText(tblKaryawan.getValueAt(baris, 1).toString());
+        txtUsername.setText(tblKaryawan.getValueAt(baris, 2).toString());
+
+        // Kosongkan password karena bersifat rahasia (bisa diisi baru jika ingin mengubah password)
+        txtPassword.setText(""); 
+    }
+    }//GEN-LAST:event_tblKaryawanMouseClicked
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+    txtNama.setText("");
+    txtUsername.setText("");
+    txtPassword.setText("");
+    idKaryawanTerpilih = ""; // Kembalikan ID menjadi kosong
+    tblKaryawan.clearSelection(); // Hilangkan sorotan warna di tabel       
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        try {
+    // Cegah jika belum ada data yang dipilih
+    if (idKaryawanTerpilih.equals("")) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Silakan klik data di tabel terlebih dahulu!");
+        return;
+    }
+    
+    java.sql.Connection conn = KoneksiDB.getKoneksi();
+    String sql = "";
+    java.sql.PreparedStatement pst;
+    
+    // Cek apakah kolom password diisi atau dibiarkan kosong
+    if (txtPassword.getText().equals("")) {
+        // Jika kosong, update Nama dan Username saja
+        sql = "UPDATE karyawan SET nama_lengkap = ?, username = ? WHERE id = ?";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, txtNama.getText());
+        pst.setString(2, txtUsername.getText());
+        pst.setString(3, idKaryawanTerpilih);
+    } else {
+        // Jika password diisi, update semuanya
+        sql = "UPDATE karyawan SET nama_lengkap = ?, username = ?, password = ? WHERE id = ?";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, txtNama.getText());
+        pst.setString(2, txtUsername.getText());
+        pst.setString(3, txtPassword.getText());
+        pst.setString(4, idKaryawanTerpilih);
+    }
+    
+    pst.execute();
+    javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil diubah!");
+    
+    // Refresh tabel dan bersihkan form
+    loadTableKaryawan();
+    btnResetActionPerformed(evt); // Memanggil method reset
+    
+} catch (Exception e) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Perubahan gagal: " + e.getMessage());
+}
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        try {
+    // Cegah jika belum ada data yang dipilih
+    if (idKaryawanTerpilih.equals("")) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Silakan klik data di tabel terlebih dahulu!");
+        return;
+    }
+    
+    // Tampilkan pop-up konfirmasi
+    int pilihan = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Apakah Anda yakin ingin menghapus karyawan ini?", 
+            "Konfirmasi Hapus", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+            
+    if (pilihan == javax.swing.JOptionPane.YES_OPTION) {
+        java.sql.Connection conn = KoneksiDB.getKoneksi();
+        String sql = "DELETE FROM karyawan WHERE id = ?";
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, idKaryawanTerpilih);
+        pst.execute();
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+        
+        // Refresh tabel dan bersihkan form
+        loadTableKaryawan();
+        btnResetActionPerformed(evt);
+    }
+} catch (Exception e) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Gagal menghapus data: " + e.getMessage());
+}
+    }//GEN-LAST:event_btnHapusActionPerformed
 
     /**
      * @param args the command line arguments

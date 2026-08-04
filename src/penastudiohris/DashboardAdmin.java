@@ -13,6 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.io.File;
+import java.io.FileWriter;
+import javax.swing.JFileChooser;
 public class DashboardAdmin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardAdmin.class.getName());
@@ -399,6 +402,7 @@ private void loadTableDataPresensi(String kataKunci) {
         btnTampilLaporan = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblLaporan = new javax.swing.JTable();
+        btnEksporLaporan = new javax.swing.JButton();
         pnlPengaturan = new javax.swing.JPanel();
         txtPengaturan = new javax.swing.JLabel();
 
@@ -527,7 +531,7 @@ private void loadTableDataPresensi(String kataKunci) {
                         .addContainerGap()
                         .addComponent(txtCuti))
                     .addGroup(pnlKaryawanCutiLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addGap(37, 37, 37)
                         .addComponent(lblCuti)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -652,7 +656,7 @@ private void loadTableDataPresensi(String kataKunci) {
             pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDashboardLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(txtDashboard)
+                .addComponent(txtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -662,14 +666,14 @@ private void loadTableDataPresensi(String kataKunci) {
                         .addComponent(pnlWfoWfh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                         .addComponent(pnlKaryawanCuti, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)))
                 .addGap(22, 22, 22)
-                .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPresensiHariIni)
-                    .addComponent(txtDashboard2))
-                .addGap(4, 4, 4)
                 .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(scrNotifCuti)
-                    .addComponent(scrPresensiHariIni))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtDashboard2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(txtPresensiHariIni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(scrNotifCuti, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+                    .addComponent(scrPresensiHariIni, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlDashboard, "card2");
@@ -685,15 +689,19 @@ private void loadTableDataPresensi(String kataKunci) {
 
         txtNama.addActionListener(this::txtNamaActionPerformed);
 
+        btnSimpan.setBackground(new java.awt.Color(102, 255, 102));
         btnSimpan.setText("Simpan");
         btnSimpan.addActionListener(this::btnSimpanActionPerformed);
 
+        btnEdit.setBackground(new java.awt.Color(102, 255, 204));
         btnEdit.setText("Edit");
         btnEdit.addActionListener(this::btnEditActionPerformed);
 
+        btnHapus.setBackground(new java.awt.Color(255, 102, 102));
         btnHapus.setText("Hapus");
         btnHapus.addActionListener(this::btnHapusActionPerformed);
 
+        btnReset.setBackground(new java.awt.Color(204, 204, 204));
         btnReset.setText("Reset");
         btnReset.addActionListener(this::btnResetActionPerformed);
 
@@ -746,18 +754,18 @@ private void loadTableDataPresensi(String kataKunci) {
                                 .addComponent(lblPassword)
                                 .addComponent(lblAksi))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(pnlKaryawanLayout.createSequentialGroup()
+                            .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlKaryawanLayout.createSequentialGroup()
                                     .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(12, 12, 12)
-                                    .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNama))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(scrKaryawan)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -1075,6 +1083,9 @@ private void loadTableDataPresensi(String kataKunci) {
         ));
         jScrollPane4.setViewportView(tblLaporan);
 
+        btnEksporLaporan.setText("Ekspor ke Excel (CSV)");
+        btnEksporLaporan.addActionListener(this::btnEksporLaporanActionPerformed);
+
         javax.swing.GroupLayout pnlLaporanLayout = new javax.swing.GroupLayout(pnlLaporan);
         pnlLaporan.setLayout(pnlLaporanLayout);
         pnlLaporanLayout.setHorizontalGroup(
@@ -1082,29 +1093,34 @@ private void loadTableDataPresensi(String kataKunci) {
             .addGroup(pnlLaporanLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(pnlLaporanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlLaporanLayout.createSequentialGroup()
+                        .addComponent(txtLaporan)
+                        .addGap(75, 75, 75)
+                        .addComponent(cbBulan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlLaporanLayout.createSequentialGroup()
-                        .addComponent(cbBulan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTampilLaporan))
-                    .addComponent(txtLaporan))
+                        .addComponent(btnTampilLaporan)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEksporLaporan)))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         pnlLaporanLayout.setVerticalGroup(
             pnlLaporanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLaporanLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(txtLaporan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlLaporanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtLaporan)
                     .addComponent(cbBulan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTampilLaporan))
+                    .addComponent(cbTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(pnlLaporanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTampilLaporan)
+                    .addComponent(btnEksporLaporan))
+                .addGap(14, 14, 14))
         );
 
         pnlContent.add(pnlLaporan, "card7");
@@ -1541,6 +1557,55 @@ if (baris != -1) {
         // Memanggil metode untuk memuat tabel laporan
         loadTableLaporan(bulanDipilih, tahunDipilih);
     }//GEN-LAST:event_btnTampilLaporanActionPerformed
+
+    private void btnEksporLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEksporLaporanActionPerformed
+        try {
+        // 1. Membuka jendela dialog "Save As"
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Simpan Laporan Sebagai...");
+
+        // Menentukan aksi jika user mengklik "Save"
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+
+            // Memastikan file diakhiri dengan ekstensi .csv
+            String filePath = fileToSave.getAbsolutePath();
+            if (!filePath.toLowerCase().endsWith(".csv")) {
+                fileToSave = new File(filePath + ".csv");
+            }
+
+            // 2. Proses menulis data ke dalam file
+            FileWriter fw = new FileWriter(fileToSave);
+            javax.swing.table.TableModel model = tblLaporan.getModel();
+
+            // Menulis Judul Kolom (Header)
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                fw.write(model.getColumnName(i) + ","); // Dipisah dengan koma untuk format CSV
+            }
+            fw.write("\n"); // Baris baru
+
+            // Menulis Isi Data (Baris demi Baris)
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    // Menangani nilai null agar tidak error
+                    Object obj = model.getValueAt(i, j);
+                    String value = (obj != null) ? obj.toString() : "";
+                    fw.write(value + ",");
+                }
+                fw.write("\n"); // Baris baru setelah satu karyawan selesai
+            }
+
+            fw.close(); // Tutup proses penulisan
+
+            // Notifikasi Sukses
+            javax.swing.JOptionPane.showMessageDialog(this, "Laporan berhasil diekspor ke:\n" + fileToSave.getAbsolutePath());
+        }
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengekspor data: " + e.getMessage());
+    }
+    }//GEN-LAST:event_btnEksporLaporanActionPerformed
     
     // Parameter kataKunci digunakan untuk fitur pencarian
 private void loadTablePekerjaan(String kataKunci) {
@@ -1677,6 +1742,7 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JButton btnDataKaryawan;
     private javax.swing.JButton btnDataPresensi;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnEksporLaporan;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnLogout;

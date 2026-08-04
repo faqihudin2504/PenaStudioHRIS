@@ -236,7 +236,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          <Component id="txtDashboard" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDashboard" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -249,16 +249,16 @@
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtPresensiHariIni" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtDashboard2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="scrNotifCuti" max="32767" attributes="0"/>
-                              <Component id="scrPresensiHariIni" max="32767" attributes="0"/>
+                              <Component id="txtDashboard2" pref="32" max="32767" attributes="0"/>
+                              <Component id="txtPresensiHariIni" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="scrNotifCuti" pref="413" max="32767" attributes="0"/>
+                              <Component id="scrPresensiHariIni" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="33" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -416,7 +416,7 @@
                                       <Component id="txtCuti" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                                       <Component id="lblCuti" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -594,20 +594,20 @@
                                           <Component id="lblAksi" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtPassword" min="-2" pref="400" max="-2" attributes="0"/>
-                                          <Component id="txtUsername" min="-2" pref="400" max="-2" attributes="0"/>
-                                          <Component id="txtNama" min="-2" pref="400" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="txtUsername" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtPassword" alignment="0" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="btnSimpan" min="-2" pref="90" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="btnEdit" min="-2" pref="90" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                               <Component id="btnHapus" min="-2" pref="90" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="btnReset" min="-2" pref="94" max="-2" attributes="0"/>
                                           </Group>
+                                          <Component id="txtNama" max="32767" attributes="0"/>
                                       </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnReset" min="-2" pref="94" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="scrKaryawan" alignment="0" max="32767" attributes="0"/>
                               </Group>
@@ -690,6 +690,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSimpan">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="66" green="ff" red="66" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Simpan"/>
                   </Properties>
                   <Events>
@@ -698,6 +701,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnEdit">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="ff" red="66" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Edit"/>
                   </Properties>
                   <Events>
@@ -706,6 +712,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnHapus">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="66" green="66" red="ff" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Hapus"/>
                   </Properties>
                   <Events>
@@ -714,6 +723,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnReset">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Reset"/>
                   </Properties>
                   <Events>
@@ -1198,15 +1210,19 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
+                                  <Component id="txtLaporan" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                                   <Component id="cbBulan" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="cbTahun" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnTampilLaporan" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="txtLaporan" min="-2" max="-2" attributes="0"/>
+                              <Component id="jScrollPane4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="btnTampilLaporan" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="btnEksporLaporan" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace pref="65" max="32767" attributes="0"/>
                       </Group>
@@ -1216,16 +1232,19 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          <Component id="txtLaporan" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtLaporan" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbBulan" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbTahun" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnTampilLaporan" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="137" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="536" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnTampilLaporan" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEksporLaporan" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1324,6 +1343,14 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JButton" name="btnEksporLaporan">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ekspor ke Excel (CSV)"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEksporLaporanActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="pnlPengaturan">

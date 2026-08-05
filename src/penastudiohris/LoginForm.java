@@ -56,6 +56,7 @@ public class LoginForm extends javax.swing.JFrame {
         txtLoginAdmin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtLoginAdmin.setText("Login Admin");
 
+        jPanel2.setBackground(new java.awt.Color(102, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lblUsername.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -107,12 +108,16 @@ public class LoginForm extends javax.swing.JFrame {
         );
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Pena Studio 2026");
+        jLabel2.setText("© CV. Pena Studio 2026");
 
         javax.swing.GroupLayout pnlLogin1Layout = new javax.swing.GroupLayout(pnlLogin1);
         pnlLogin1.setLayout(pnlLogin1Layout);
         pnlLogin1Layout.setHorizontalGroup(
             pnlLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogin1Layout.createSequentialGroup()
+                .addGap(0, 6, Short.MAX_VALUE)
+                .addComponent(txtLoginAdmin)
+                .addGap(81, 81, 81))
             .addGroup(pnlLogin1Layout.createSequentialGroup()
                 .addGroup(pnlLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlLogin1Layout.createSequentialGroup()
@@ -120,17 +125,11 @@ public class LoginForm extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(pnlLogin1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlLogin1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(jLabel2)))
                 .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogin1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(pnlLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogin1Layout.createSequentialGroup()
-                        .addComponent(txtLoginAdmin)
-                        .addGap(81, 81, 81))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogin1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(85, 85, 85))))
         );
         pnlLogin1Layout.setVerticalGroup(
             pnlLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

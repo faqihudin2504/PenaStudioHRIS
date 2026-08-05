@@ -40,7 +40,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
             
             //Mengatur Nama Admin di Sidebar
             lblNamaAdmin.setText("Halo, " + namaAdmin);
-
+            
+            // Memanggil semua fungsi untuk menarik data dari database ke layar
             loadDataDashboard();
             loadTableKehadiran();
             loadNotifikasiCuti();
@@ -50,46 +51,219 @@ public class DashboardAdmin extends javax.swing.JFrame {
             loadTablePekerjaan("");
             loadProfilPerusahaan();
             loadPengaturanSistem();
-
+            
+            // Memberikan warna efek aktif pada tombol Dashboard di awal mula
             setTombolAktif(btnDashboard);
 
             }
             
-
-            private void loadTableCuti() {
-            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel();
-            model.addColumn("ID Cuti");
-            model.addColumn("Nama Karyawan");
-            model.addColumn("Mulai");
-            model.addColumn("Selesai");
-            model.addColumn("Alasan");
-            model.addColumn("Status");
+    // ==========================================
+    // 3. METODE LOAD DATA (READ)
+    // ==========================================
     
-    try {
-        java.sql.Connection conn = KoneksiDB.getKoneksi();
-        // Menggabungkan tabel pengajuan_cuti dan karyawan
-        String sql = "SELECT c.id, k.nama_lengkap, c.tanggal_mulai, c.tanggal_selesai, c.alasan, c.status_approval "
-                   + "FROM pengajuan_cuti c "
-                   + "JOIN karyawan k ON c.karyawan_id = k.id "
-                   + "ORDER BY c.id DESC"; // Urutkan dari yang terbaru
-                   
-        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        java.sql.ResultSet rs = pst.executeQuery();
-        
-        while (rs.next()) {
-            model.addRow(new Object[]{
-                rs.getString("id"),
-                rs.getString("nama_lengkap"),
-                rs.getString("tanggal_mulai"),
-                rs.getString("tanggal_selesai"),
-                rs.getString("alasan"),
-                rs.getString("status_approval").toUpperCase()
-            });
+    /** Mengambil metrik total karyawan, kehadiran, dan cuti untuk ringkasan Dashboard */
+    private void loadDataDashboard() {
+        try {
+            Connection conn = KoneksiDB.getKoneksi();
+            
+            // Hitung Total Karyawan
+            String sqlTotal = "SELECT COUNT(*) AS total FROM karyawan WHERE role = 'karyawan'";
+            PreparedStatement pst1 = conn.prepareStatement(sqlTotal);
+            ResultSet rs1 = pst1.executeQuery();
+            if (rs1.next()) lblTotalKaryawan.setText(rs1.getString("total"));
+            
+            // Hitung Hadir Hari Ini
+            String sqlHadir = "SELECT COUNT(*) AS total FROM presensi WHERE tanggal = CURDATE()";
+            PreparedStatement pst2 = conn.prepareStatement(sqlHadir);
+            ResultSet rs2 = pst2.executeQuery();
+            if (rs2.next()) lblHadir.setText(rs2.getString("total"));
+            
+            // Hitung Karyawan Cuti (Hari Ini)
+            String sqlCuti = "SELECT COUNT(*) AS total FROM pengajuan_cuti WHERE CURDATE() BETWEEN tanggal_mulai AND tanggal_selesai AND status_approval = 'approved'";
+            PreparedStatement pst3 = conn.prepareStatement(sqlCuti);
+            ResultSet rs3 = pst3.executeQuery();
+            if (rs3.next()) lblCuti.setText(rs3.getString("total"));
+            
+            // Pembagian WFO / WFH
+            String sqlWfoWfh = "SELECT SUM(CASE WHEN tipe_kerja = 'wfo' THEN 1 ELSE 0 END) AS total_wfo, "
+                             + "SUM(CASE WHEN tipe_kerja = 'wfh' THEN 1 ELSE 0 END) AS total_wfh "
+                             + "FROM presensi WHERE tanggal = CURDATE()";
+            PreparedStatement pst4 = conn.prepareStatement(sqlWfoWfh);
+            ResultSet rs4 = pst4.executeQuery();
+            if (rs4.next()) {
+                lblWfoWfh.setText(rs4.getInt("total_wfo") + " / " + rs4.getInt("total_wfh"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error load dashboard: " + e.getMessage());
         }
-    } catch (Exception e) {
-        System.out.println("Error load data cuti: " + e.getMessage());
     }
-}
+    
+    /** Menampilkan tabel presensi mini khusus hari ini di halaman Dashboard */
+    private void loadTableKehadiran() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Nama Karyawan");
+        model.addColumn("Jam Masuk");
+        model.addColumn("Tipe Kerja");
+        tblPresensiHariIni.setModel(model);
+        
+        try {
+            Connection conn = KoneksiDB.getKoneksi();
+            String sql = "SELECT k.nama_lengkap, p.jam_masuk, p.tipe_kerja FROM presensi p "
+                       + "JOIN karyawan k ON p.karyawan_id = k.id "
+                       + "WHERE p.tanggal = CURDATE() ORDER BY p.jam_masuk DESC";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("nama_lengkap"), 
+                    rs.getString("jam_masuk"), 
+                    rs.getString("tipe_kerja").toUpperCase()
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Error load tabel: " + e.getMessage());
+        }
+    }
+    
+    /** Menampilkan tabel notifikasi cuti yang berstatus 'pending' di halaman Dashboard */
+    private void loadNotifikasiCuti() {
+        DefaultTableModel modelNotif = new DefaultTableModel();
+        modelNotif.addColumn("Nama Karyawan");
+        modelNotif.addColumn("Mulai Cuti");
+        modelNotif.addColumn("Status");
+        tblNotifCuti.setModel(modelNotif);
+        
+        try {
+            Connection conn = KoneksiDB.getKoneksi();
+            String sql = "SELECT k.nama_lengkap, c.tanggal_mulai, c.status_approval FROM pengajuan_cuti c "
+                       + "JOIN karyawan k ON c.karyawan_id = k.id "
+                       + "WHERE c.status_approval = 'pending' ORDER BY c.id DESC LIMIT 10";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                modelNotif.addRow(new Object[]{
+                    rs.getString("nama_lengkap"), 
+                    rs.getString("tanggal_mulai"), 
+                    rs.getString("status_approval").toUpperCase()
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Error load notifikasi: " + e.getMessage());
+        }
+    }
+    
+    /** Menampilkan seluruh data karyawan di menu Data Karyawan */
+    private void loadTableKaryawan() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Nama Lengkap");
+        model.addColumn("Username");
+        model.addColumn("Role");
+        model.addColumn("Sisa Cuti");
+        tblKaryawan.setModel(model);
+        
+        try {
+            Connection conn = KoneksiDB.getKoneksi();
+            String sql = "SELECT id, nama_lengkap, username, role, sisa_cuti FROM karyawan ORDER BY id DESC";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("id"),
+                    rs.getString("nama_lengkap"),
+                    rs.getString("username"),
+                    rs.getString("role"),
+                    rs.getString("sisa_cuti")
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Error load data karyawan: " + e.getMessage());
+        }
+    }
+    
+    /** Menampilkan data presensi dengan fitur pencarian opsional */
+    private void loadTableDataPresensi(String kataKunci) {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Tanggal");
+        model.addColumn("Nama Karyawan");
+        model.addColumn("Jam Masuk");
+        model.addColumn("Jam Keluar");
+        model.addColumn("Tipe Kerja");
+        model.addColumn("Lokasi GPS");
+        tblDataPresensi.setModel(model);
+        
+        try {
+            Connection conn = KoneksiDB.getKoneksi();
+            String sql;
+            PreparedStatement pst;
+            
+            if (kataKunci.isEmpty()) {
+                sql = "SELECT p.tanggal, k.nama_lengkap, p.jam_masuk, p.jam_keluar, p.tipe_kerja, p.lokasi_gps "
+                    + "FROM presensi p JOIN karyawan k ON p.karyawan_id = k.id "
+                    + "ORDER BY p.tanggal DESC, p.jam_masuk DESC";
+                pst = conn.prepareStatement(sql);
+            } else {
+                sql = "SELECT p.tanggal, k.nama_lengkap, p.jam_masuk, p.jam_keluar, p.tipe_kerja, p.lokasi_gps "
+                    + "FROM presensi p JOIN karyawan k ON p.karyawan_id = k.id "
+                    + "WHERE k.nama_lengkap LIKE ? ORDER BY p.tanggal DESC, p.jam_masuk DESC";
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, "%" + kataKunci + "%");
+            }
+            
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String jamKeluar = rs.getString("jam_keluar");
+                if (jamKeluar == null) jamKeluar = "Belum Keluar";
+                
+                model.addRow(new Object[]{
+                    rs.getString("tanggal"),
+                    rs.getString("nama_lengkap"),
+                    rs.getString("jam_masuk"),
+                    jamKeluar,
+                    rs.getString("tipe_kerja").toUpperCase(),
+                    rs.getString("lokasi_gps")
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Error load data presensi: " + e.getMessage());
+        }
+    }
+
+            /** Menampilkan seluruh riwayat pengajuan cuti */
+    private void loadTableCuti() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID Cuti");
+        model.addColumn("Nama Karyawan");
+        model.addColumn("Mulai");
+        model.addColumn("Selesai");
+        model.addColumn("Alasan");
+        model.addColumn("Status");
+        tblCuti.setModel(model);
+        
+        try {
+            Connection conn = KoneksiDB.getKoneksi();
+            String sql = "SELECT c.id, k.nama_lengkap, c.tanggal_mulai, c.tanggal_selesai, c.alasan, c.status_approval "
+                       + "FROM pengajuan_cuti c JOIN karyawan k ON c.karyawan_id = k.id ORDER BY c.id DESC";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("id"),
+                    rs.getString("nama_lengkap"),
+                    rs.getString("tanggal_mulai"),
+                    rs.getString("tanggal_selesai"),
+                    rs.getString("alasan"),
+                    rs.getString("status_approval").toUpperCase()
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Error load data cuti: " + e.getMessage());
+        }
+    }
             
             private void loadPengaturanSistem() {
     try {
@@ -106,231 +280,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         }
     } catch (Exception e) {
         System.out.println("Error load pengaturan sistem: " + e.getMessage());
-    }
-}
-    
-    private void loadDataDashboard() {
-    try {
-        // Buka koneksi ke database
-        Connection conn = KoneksiDB.getKoneksi();
-        
-        // ==========================================
-        // 1. Menghitung Total Karyawan
-        // ==========================================
-        String sqlTotal = "SELECT COUNT(*) AS total FROM karyawan WHERE role = 'karyawan'";
-        PreparedStatement pst1 = conn.prepareStatement(sqlTotal);
-        ResultSet rs1 = pst1.executeQuery();
-        if (rs1.next()) {
-            lblTotalKaryawan.setText(rs1.getString("total"));
-        }
-        
-        // ==========================================
-        // 2. Menghitung Hadir Hari Ini
-        // ==========================================
-        String sqlHadir = "SELECT COUNT(*) AS total FROM presensi WHERE tanggal = CURDATE()";
-        PreparedStatement pst2 = conn.prepareStatement(sqlHadir);
-        ResultSet rs2 = pst2.executeQuery();
-        if (rs2.next()) {
-            lblHadir.setText(rs2.getString("total"));
-        }
-        
-        // ==========================================
-        // 3. Menghitung Karyawan Cuti (Hari Ini)
-        // ==========================================
-        // Hanya menghitung cuti yang statusnya 'approved' dan tanggal hari ini berada di antara tanggal mulai & selesai
-        String sqlCuti = "SELECT COUNT(*) AS total FROM pengajuan_cuti WHERE CURDATE() BETWEEN tanggal_mulai AND tanggal_selesai AND status_approval = 'approved'";
-        PreparedStatement pst3 = conn.prepareStatement(sqlCuti);
-        ResultSet rs3 = pst3.executeQuery();
-        if (rs3.next()) {
-            lblCuti.setText(rs3.getString("total"));
-        }
-        
-        // ==========================================
-        // 4. Pembagian WFO dan WFH (Hari Ini)
-        // ==========================================
-        String sqlWfoWfh = "SELECT "
-                + "SUM(CASE WHEN tipe_kerja = 'wfo' THEN 1 ELSE 0 END) AS total_wfo, "
-                + "SUM(CASE WHEN tipe_kerja = 'wfh' THEN 1 ELSE 0 END) AS total_wfh "
-                + "FROM presensi WHERE tanggal = CURDATE()";
-        PreparedStatement pst4 = conn.prepareStatement(sqlWfoWfh);
-        ResultSet rs4 = pst4.executeQuery();
-        if (rs4.next()) {
-            int wfo = rs4.getInt("total_wfo");
-            int wfh = rs4.getInt("total_wfh");
-            
-            // Formatnya menjadi "X / Y" (Misal: 1 / 0)
-            lblWfoWfh.setText(wfo + " / " + wfh);
-        }
-
-    } catch (Exception e) {
-        System.out.println("Error load dashboard: " + e.getMessage());
-    }
-}
-    
-    private void loadTableKehadiran() {
-    // 1. Membuat pengaturan kolom tabel
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("Nama Karyawan");
-    model.addColumn("Jam Masuk");
-    model.addColumn("Tipe Kerja");
-    
-    // Menerapkan model tersebut ke tabel di UI Anda
-    tblPresensiHariIni.setModel(model);
-    
-    try {
-        Connection conn = KoneksiDB.getKoneksi();
-        
-        // 2. Query JOIN untuk mengambil nama dari tabel karyawan dan jam dari tabel presensi (Khusus hari ini)
-        String sql = "SELECT k.nama_lengkap, p.jam_masuk, p.tipe_kerja "
-                   + "FROM presensi p "
-                   + "JOIN karyawan k ON p.karyawan_id = k.id "
-                   + "WHERE p.tanggal = CURDATE() "
-                   + "ORDER BY p.jam_masuk DESC"; // Urutkan dari yang absen terbaru
-                   
-        PreparedStatement pst = conn.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-        
-        // 3. Looping untuk memasukkan semua baris data ke dalam tabel
-        while (rs.next()) {
-            String nama = rs.getString("nama_lengkap");
-            String jam = rs.getString("jam_masuk");
-            String tipe = rs.getString("tipe_kerja").toUpperCase(); // WFO/WFH dibuat huruf besar
-            
-            // Tambahkan data ke dalam baris tabel
-            model.addRow(new Object[]{nama, jam, tipe});
-        }
-        
-    } catch (Exception e) {
-        System.out.println("Error load tabel: " + e.getMessage());
-    }
-}
-    
-    // Tambahkan parameter kataKunci untuk fitur pencarian
-private void loadTableDataPresensi(String kataKunci) {
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("Tanggal");
-    model.addColumn("Nama Karyawan");
-    model.addColumn("Jam Masuk");
-    model.addColumn("Jam Keluar");
-    model.addColumn("Tipe Kerja");
-    model.addColumn("Lokasi GPS");
-    
-    tblDataPresensi.setModel(model);
-    
-    try {
-        java.sql.Connection conn = KoneksiDB.getKoneksi();
-        String sql;
-        java.sql.PreparedStatement pst;
-        
-        // Mengecek apakah ada kata kunci pencarian
-        if (kataKunci.isEmpty()) {
-            // Jika kosong, tampilkan semua data, urutkan dari yang paling baru
-            sql = "SELECT p.tanggal, k.nama_lengkap, p.jam_masuk, p.jam_keluar, p.tipe_kerja, p.lokasi_gps "
-                + "FROM presensi p "
-                + "JOIN karyawan k ON p.karyawan_id = k.id "
-                + "ORDER BY p.tanggal DESC, p.jam_masuk DESC";
-            pst = conn.prepareStatement(sql);
-        } else {
-            // Jika ada kata kunci, cari berdasarkan nama lengkap
-            sql = "SELECT p.tanggal, k.nama_lengkap, p.jam_masuk, p.jam_keluar, p.tipe_kerja, p.lokasi_gps "
-                + "FROM presensi p "
-                + "JOIN karyawan k ON p.karyawan_id = k.id "
-                + "WHERE k.nama_lengkap LIKE ? "
-                + "ORDER BY p.tanggal DESC, p.jam_masuk DESC";
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, "%" + kataKunci + "%"); // Menggunakan % untuk pencarian mirip
-        }
-        
-        java.sql.ResultSet rs = pst.executeQuery();
-        
-        while (rs.next()) {
-            // Mengubah format null pada jam keluar menjadi teks yang lebih baik
-            String jamKeluar = rs.getString("jam_keluar");
-            if (jamKeluar == null) {
-                jamKeluar = "Belum Keluar";
-            }
-            
-            model.addRow(new Object[]{
-                rs.getString("tanggal"),
-                rs.getString("nama_lengkap"),
-                rs.getString("jam_masuk"),
-                jamKeluar,
-                rs.getString("tipe_kerja").toUpperCase(),
-                rs.getString("lokasi_gps")
-            });
-        }
-    } catch (Exception e) {
-        System.out.println("Error load data presensi: " + e.getMessage());
-    }
-}
-    
-    private void loadNotifikasiCuti() {
-    // 1. Mengatur judul kolom untuk notifikasi
-    DefaultTableModel modelNotif = new DefaultTableModel();
-    modelNotif.addColumn("Nama Karyawan");
-    modelNotif.addColumn("Mulai Cuti");
-    modelNotif.addColumn("Status");
-    
-    // Menerapkan model ke tabel notifikasi
-    tblNotifCuti.setModel(modelNotif);
-    
-    try {
-        java.sql.Connection conn = KoneksiDB.getKoneksi();
-        
-        // 2. Query untuk mengambil pengajuan cuti yang masih 'pending'
-        String sql = "SELECT k.nama_lengkap, c.tanggal_mulai, c.status_approval "
-                   + "FROM pengajuan_cuti c "
-                   + "JOIN karyawan k ON c.karyawan_id = k.id "
-                   + "WHERE c.status_approval = 'pending' "
-                   + "ORDER BY c.id DESC LIMIT 10"; // Mengambil 10 notifikasi terbaru
-                   
-        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        java.sql.ResultSet rs = pst.executeQuery();
-        
-        // 3. Memasukkan data ke dalam tabel
-        while (rs.next()) {
-            String nama = rs.getString("nama_lengkap");
-            String tgl = rs.getString("tanggal_mulai");
-            String status = rs.getString("status_approval").toUpperCase(); 
-            
-            modelNotif.addRow(new Object[]{nama, tgl, status});
-        }
-        
-    } catch (Exception e) {
-        System.out.println("Error load notifikasi: " + e.getMessage());
-    }
-}
-
-    private void loadTableKaryawan() {
-    // 1. Mengatur kolom tabel
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("ID");
-    model.addColumn("Nama Lengkap");
-    model.addColumn("Username");
-    model.addColumn("Role");
-    model.addColumn("Sisa Cuti");
-    
-    tblKaryawan.setModel(model);
-    
-    try {
-        java.sql.Connection conn = KoneksiDB.getKoneksi();
-        // 2. Query mengambil semua data karyawan
-        String sql = "SELECT id, nama_lengkap, username, role, sisa_cuti FROM karyawan ORDER BY id DESC";
-        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        java.sql.ResultSet rs = pst.executeQuery();
-        
-        // 3. Masukkan data ke tabel
-        while (rs.next()) {
-            model.addRow(new Object[]{
-                rs.getString("id"),
-                rs.getString("nama_lengkap"),
-                rs.getString("username"),
-                rs.getString("role"),
-                rs.getString("sisa_cuti")
-            });
-        }
-    } catch (Exception e) {
-        System.out.println("Error load data karyawan: " + e.getMessage());
     }
 }
     /**
@@ -432,18 +381,6 @@ private void loadTableDataPresensi(String kataKunci) {
         pnlPengaturan = new javax.swing.JPanel();
         txtPengaturan = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtJamMasuk = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtJamKeluar = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtKuotaCuti = new javax.swing.JTextField();
-        btnResetCutiMassal = new javax.swing.JButton();
-        btnSimpanAturan = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         lblNamaPerusahaan = new javax.swing.JLabel();
@@ -456,6 +393,18 @@ private void loadTableDataPresensi(String kataKunci) {
         jScrollPane6 = new javax.swing.JScrollPane();
         txtAlamatPerusahaan = new javax.swing.JTextArea();
         btnSimpanProfil = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtJamMasuk = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtJamKeluar = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtKuotaCuti = new javax.swing.JTextField();
+        btnResetCutiMassal = new javax.swing.JButton();
+        btnSimpanAturan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1186,99 +1135,6 @@ private void loadTableDataPresensi(String kataKunci) {
         txtPengaturan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtPengaturan.setText("Pengaturan");
 
-        jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Pengaturan Jam & Kerja");
-
-        jLabel3.setText("Jam Masuk Standar");
-
-        txtJamMasuk.setText("08:00:00");
-
-        jLabel4.setText("Jam Keluar Standar");
-
-        txtJamKeluar.setText("17:00:00");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Pengaturan Kuota Cuti");
-
-        jLabel6.setText("Kuota Cuti Tahunan");
-
-        txtKuotaCuti.setText("12");
-
-        btnResetCutiMassal.setBackground(new java.awt.Color(255, 153, 0));
-        btnResetCutiMassal.setText("Reset Kuota Cuti Massal");
-
-        btnSimpanAturan.setBackground(new java.awt.Color(153, 255, 102));
-        btnSimpanAturan.setText("Simpan Pengaturan");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel2))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel5))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(20, 20, 20)
-                                    .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(27, 27, 27)
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtKuotaCuti))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addGap(36, 36, 36)
-                            .addComponent(btnResetCutiMassal, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(btnSimpanAturan, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(197, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtKuotaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnResetCutiMassal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
-                .addComponent(btnSimpanAturan)
-                .addGap(95, 95, 95))
-        );
-
-        jScrollPane7.setViewportView(jPanel2);
-
-        jTabbedPane1.addTab("Aturan & Cuti", jScrollPane7);
-
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         lblNamaPerusahaan.setText("Nama Perusahaan");
@@ -1355,6 +1211,100 @@ private void loadTableDataPresensi(String kataKunci) {
         jScrollPane5.setViewportView(jPanel1);
 
         jTabbedPane1.addTab("Profil Perusahaan", jScrollPane5);
+
+        jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setText("Pengaturan Jam & Kerja");
+
+        jLabel3.setText("Jam Masuk Standar");
+
+        txtJamMasuk.setText("08:00:00");
+
+        jLabel4.setText("Jam Keluar Standar");
+
+        txtJamKeluar.setText("17:00:00");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Pengaturan Kuota Cuti");
+
+        jLabel6.setText("Kuota Cuti Tahunan");
+
+        txtKuotaCuti.setText("12");
+
+        btnResetCutiMassal.setBackground(new java.awt.Color(255, 153, 0));
+        btnResetCutiMassal.setText("Reset Kuota Cuti Massal");
+        btnResetCutiMassal.addActionListener(this::btnResetCutiMassalActionPerformed);
+
+        btnSimpanAturan.setBackground(new java.awt.Color(153, 255, 102));
+        btnSimpanAturan.setText("Simpan Pengaturan");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel2))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel5))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(25, 25, 25)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(27, 27, 27)
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtKuotaCuti))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addGap(36, 36, 36)
+                            .addComponent(btnResetCutiMassal, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(btnSimpanAturan, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(197, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtKuotaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnResetCutiMassal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
+                .addComponent(btnSimpanAturan)
+                .addGap(95, 95, 95))
+        );
+
+        jScrollPane7.setViewportView(jPanel2);
+
+        jTabbedPane1.addTab("Aturan & Cuti", jScrollPane7);
 
         javax.swing.GroupLayout pnlPengaturanLayout = new javax.swing.GroupLayout(pnlPengaturan);
         pnlPengaturan.setLayout(pnlPengaturanLayout);
@@ -1524,7 +1474,7 @@ private void loadTableDataPresensi(String kataKunci) {
         // 1. Validasi form kosong
         if(txtNama.getText().equals("") || txtUsername.getText().equals("") || txtPassword.getText().equals("")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Semua kolom (Nama, Username, Password) wajib diisi!");
-            return; // Hentikan proses jika ada yang kosong
+            return; 
         }
 
         // 2. Query Insert ke Database
@@ -1573,8 +1523,8 @@ private void loadTableDataPresensi(String kataKunci) {
     txtNama.setText("");
     txtUsername.setText("");
     txtPassword.setText("");
-    idKaryawanTerpilih = ""; // Kembalikan ID menjadi kosong
-    tblKaryawan.clearSelection(); // Hilangkan sorotan warna di tabel       
+    idKaryawanTerpilih = "";
+    tblKaryawan.clearSelection();   
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -1612,7 +1562,7 @@ private void loadTableDataPresensi(String kataKunci) {
     
     // Refresh tabel dan bersihkan form
     loadTableKaryawan();
-    btnResetActionPerformed(evt); // Memanggil method reset
+    btnResetActionPerformed(evt);
     
 } catch (Exception e) {
     javax.swing.JOptionPane.showMessageDialog(this, "Perubahan gagal: " + e.getMessage());
@@ -1657,8 +1607,8 @@ private void loadTableDataPresensi(String kataKunci) {
     }//GEN-LAST:event_btnCariPresensiActionPerformed
 
     private void btnRefreshPresensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshPresensiActionPerformed
-        txtCariPresensi.setText(""); // Kosongkan kolom pencarian
-        loadTableDataPresensi("");   // Panggil semua data lagi
+        txtCariPresensi.setText("");
+        loadTableDataPresensi(""); 
     }//GEN-LAST:event_btnRefreshPresensiActionPerformed
 
     private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
@@ -1881,6 +1831,44 @@ if (baris != -1) {
     private void cbBulanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBulanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbBulanActionPerformed
+
+    private void btnResetCutiMassalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetCutiMassalActionPerformed
+                try {
+                // 1. Tampilkan dialog konfirmasi dua kali lipat karena ini aksi massal yang berisiko
+                int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this, 
+                        "PERINGATAN: Aksi ini akan mengubah sisa cuti SELURUH karyawan menjadi nilai default.\nApakah Anda benar-benar yakin ingin mereset kuota cuti massal?", 
+                        "Konfirmasi Reset Massal", 
+                        javax.swing.JOptionPane.YES_NO_OPTION,
+                        javax.swing.JOptionPane.WARNING_MESSAGE);
+
+                if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+                    java.sql.Connection conn = KoneksiDB.getKoneksi();
+
+                    // 2. Mengambil nilai default cuti dari tabel pengaturan_sistem
+                    String sqlGetDefault = "SELECT kuota_cuti_default FROM pengaturan_sistem WHERE id = 1";
+                    java.sql.PreparedStatement pstGet = conn.prepareStatement(sqlGetDefault);
+                    java.sql.ResultSet rs = pstGet.executeQuery();
+
+                    int kuotaDefault = 12; // Nilai jaga-jaga
+                    if (rs.next()) {
+                        kuotaDefault = rs.getInt("kuota_cuti_default");
+                    }
+
+                    // 3. Update massal ke tabel karyawan
+                    String sqlUpdateMassal = "UPDATE karyawan SET sisa_cuti = ? WHERE role = 'karyawan'";
+                    java.sql.PreparedStatement pstUpdate = conn.prepareStatement(sqlUpdateMassal);
+                    pstUpdate.setInt(1, kuotaDefault);
+                    pstUpdate.execute();
+
+                    javax.swing.JOptionPane.showMessageDialog(this, "Sukses! Kuota cuti seluruh karyawan telah di-reset menjadi " + kuotaDefault + " hari.");
+
+                    // Refresh tabel karyawan agar datanya langsung terupdate di layar
+                    loadTableKaryawan(); 
+                }
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal mereset cuti massal: " + e.getMessage());
+            }
+    }//GEN-LAST:event_btnResetCutiMassalActionPerformed
     
     private void loadProfilPerusahaan() {
         try {
@@ -1999,6 +1987,9 @@ private void loadTableLaporan(String bulan, String tahun) {
         System.out.println("Error load laporan: " + e.getMessage());
     }
 }
+    // ==========================================
+    // 4. METODE HELPER / UTILITAS
+    // ==========================================
 
     private void setTombolAktif(javax.swing.JButton tombolAktif) {
         // 1. Kembalikan semua tombol ke warna standar (putih/abu-abu terang)

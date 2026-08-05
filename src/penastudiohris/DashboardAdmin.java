@@ -390,25 +390,25 @@ public class DashboardAdmin extends javax.swing.JFrame {
         lblNamaPerusahaan = new javax.swing.JLabel();
         txtNamaPerusahaan = new javax.swing.JTextField();
         lblTelepon = new javax.swing.JLabel();
-        txtTelepon = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         lblAlamatLengkap = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         txtAlamatPerusahaan = new javax.swing.JTextArea();
         btnSimpanProfil = new javax.swing.JButton();
+        txtTelepon = new javax.swing.JFormattedTextField();
         scrpnlAturanCuti = new javax.swing.JScrollPane();
         pnlAturanCuti = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtJamMasuk = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtJamKeluar = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtKuotaCuti = new javax.swing.JTextField();
         btnResetCutiMassal = new javax.swing.JButton();
         btnSimpanAturan = new javax.swing.JButton();
+        txtJamMasuk = new javax.swing.JFormattedTextField();
+        txtJamKeluar = new javax.swing.JFormattedTextField();
         scrpnlGPS = new javax.swing.JScrollPane();
         pnlGPS = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -418,6 +418,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtRadius = new javax.swing.JTextField();
         btnSimpanLokasi = new javax.swing.JButton();
+        scrpnlKeamananAkun = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -707,6 +708,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
         lblPassword.setText("Password");
 
         txtNama.addActionListener(this::txtNamaActionPerformed);
+        txtNama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNamaKeyTyped(evt);
+            }
+        });
 
         btnSimpan.setBackground(new java.awt.Color(102, 255, 102));
         btnSimpan.setText("Simpan");
@@ -817,8 +823,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addComponent(lblDataKaryawan)
                 .addGap(9, 9, 9)
-                .addComponent(scrKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addComponent(scrKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlKaryawan, "card3");
@@ -936,8 +942,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
             pnlDaftarCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDaftarCutiLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pnlAlasanCuti.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -962,7 +968,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addGroup(pnlAlasanCutiLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblFotoBukti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblFotoBukti, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlAlasanCutiLayout.setVerticalGroup(
@@ -985,21 +991,22 @@ public class DashboardAdmin extends javax.swing.JFrame {
         pnlCutiIzinLayout.setHorizontalGroup(
             pnlCutiIzinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCutiIzinLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(pnlCutiIzinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCutiIzin)
+                    .addComponent(pnlDaftarCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCutiIzinLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(pnlCutiIzinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlAlasanCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlCutiIzinLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(pnlCutiIzinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCutiIzin)
-                            .addComponent(pnlDaftarCuti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlAlasanCuti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCutiIzinLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(btnApprove)
                         .addGap(18, 18, 18)
                         .addComponent(btnReject)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancel)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
         pnlCutiIzinLayout.setVerticalGroup(
             pnlCutiIzinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1007,15 +1014,15 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(txtCutiIzin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlDaftarCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlAlasanCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlDaftarCuti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlAlasanCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlCutiIzinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnApprove)
                     .addComponent(btnReject)
                     .addComponent(btnCancel))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pnlContent.add(pnlCutiIzin, "card5");
@@ -1068,15 +1075,15 @@ public class DashboardAdmin extends javax.swing.JFrame {
             .addGroup(pnlDaftarPekerjaanLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(txtDaftarPekerjaan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(pnlDaftarPekerjaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCariDataKaryawan)
                     .addComponent(txtCariPekerjaan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCariPekerjaan)
                     .addComponent(btnRefreshPekerjaan))
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlDaftarPekerjaan, "card6");
@@ -1153,6 +1160,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
         lblNamaPerusahaan.setText("Nama Perusahaan");
 
         txtNamaPerusahaan.addActionListener(this::txtNamaPerusahaanActionPerformed);
+        txtNamaPerusahaan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNamaPerusahaanKeyTyped(evt);
+            }
+        });
 
         lblTelepon.setText("Telepon");
 
@@ -1168,6 +1180,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
         btnSimpanProfil.setText("Simpan Perubahan");
         btnSimpanProfil.addActionListener(this::btnSimpanProfilActionPerformed);
 
+        txtTelepon.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("####-####-####"))));
+
         javax.swing.GroupLayout pnlProfilPerusahaanLayout = new javax.swing.GroupLayout(pnlProfilPerusahaan);
         pnlProfilPerusahaan.setLayout(pnlProfilPerusahaanLayout);
         pnlProfilPerusahaanLayout.setHorizontalGroup(
@@ -1177,21 +1191,19 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProfilPerusahaanLayout.createSequentialGroup()
-                            .addComponent(lblTelepon)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProfilPerusahaanLayout.createSequentialGroup()
                             .addComponent(lblNamaPerusahaan)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(txtNamaPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProfilPerusahaanLayout.createSequentialGroup()
                             .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblEmail)
-                                .addComponent(lblAlamatLengkap))
+                                .addComponent(lblAlamatLengkap)
+                                .addComponent(lblTelepon))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
-                                .addComponent(jScrollPane6))))
+                                .addComponent(jScrollPane6)
+                                .addComponent(txtTelepon))))
                     .addComponent(btnSimpanProfil, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(163, Short.MAX_VALUE))
         );
@@ -1205,7 +1217,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelepon)
-                    .addComponent(txtTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail)
@@ -1216,7 +1228,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSimpanProfil)
-                .addContainerGap(285, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
 
         scrpnlProfilPerusahaan.setViewportView(pnlProfilPerusahaan);
@@ -1230,11 +1242,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         jLabel3.setText("Jam Masuk Standar");
 
-        txtJamMasuk.setText("08:00:00");
-
         jLabel4.setText("Jam Keluar Standar");
-
-        txtJamKeluar.setText("17:00:00");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Pengaturan Kuota Cuti");
@@ -1242,6 +1250,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel6.setText("Kuota Cuti Tahunan");
 
         txtKuotaCuti.setText("12");
+        txtKuotaCuti.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtKuotaCutiKeyTyped(evt);
+            }
+        });
 
         btnResetCutiMassal.setBackground(new java.awt.Color(255, 153, 0));
         btnResetCutiMassal.setText("Reset Kuota Cuti Massal");
@@ -1249,6 +1262,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         btnSimpanAturan.setBackground(new java.awt.Color(153, 255, 102));
         btnSimpanAturan.setText("Simpan Pengaturan");
+        btnSimpanAturan.addActionListener(this::btnSimpanAturanActionPerformed);
+
+        txtJamMasuk.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##:##:##"))));
+
+        txtJamKeluar.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
 
         javax.swing.GroupLayout pnlAturanCutiLayout = new javax.swing.GroupLayout(pnlAturanCuti);
         pnlAturanCuti.setLayout(pnlAturanCutiLayout);
@@ -1264,11 +1282,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel5))
                     .addGroup(pnlAturanCutiLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlAturanCutiLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(20, 20, 20)
-                                .addComponent(txtJamKeluar))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlAturanCutiLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
@@ -1293,10 +1311,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1320,6 +1338,12 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel8.setText("Latitude Kantor");
 
         jLabel9.setText("Batas Radius (Meter)");
+
+        txtRadius.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRadiusKeyTyped(evt);
+            }
+        });
 
         btnSimpanLokasi.setBackground(new java.awt.Color(153, 255, 102));
         btnSimpanLokasi.setText("Simpan Lokasi");
@@ -1371,6 +1395,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         scrpnlGPS.setViewportView(pnlGPS);
 
         pnlLokasiKantor.addTab("Lokasi Kantor (GPS", scrpnlGPS);
+        pnlLokasiKantor.addTab("Keamanan Akun", scrpnlKeamananAkun);
 
         javax.swing.GroupLayout pnlPengaturanLayout = new javax.swing.GroupLayout(pnlPengaturan);
         pnlPengaturan.setLayout(pnlPengaturanLayout);
@@ -1872,64 +1897,65 @@ if (baris != -1) {
 
     private void btnResetCutiMassalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetCutiMassalActionPerformed
         try {
-            // 1. Tampilkan dialog konfirmasi dua kali lipat karena ini aksi massal yang berisiko
-            int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this,
-                "PERINGATAN: Aksi ini akan mengubah sisa cuti SELURUH karyawan menjadi nilai default.\nApakah Anda benar-benar yakin ingin mereset kuota cuti massal?",
-                "Konfirmasi Reset Massal",
-                javax.swing.JOptionPane.YES_NO_OPTION,
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+            // 1. Ambil angka secara langsung dari kolom teks (real-time)
+            int kuotaBaru = Integer.parseInt(txtKuotaCuti.getText());
+
+            // 2. Tampilkan pesan peringatan yang angkanya sudah dinamis
+            int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "PERINGATAN: Aksi ini akan mengubah sisa cuti SELURUH karyawan menjadi " + kuotaBaru + " hari.\nApakah Anda benar-benar yakin ingin mereset kuota cuti massal?", 
+                    "Konfirmasi Reset Massal", 
+                    javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
 
             if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
                 java.sql.Connection conn = KoneksiDB.getKoneksi();
 
-                // 2. Mengambil nilai default cuti dari tabel pengaturan_sistem
-                String sqlGetDefault = "SELECT kuota_cuti_default FROM pengaturan_sistem WHERE id = 1";
-                java.sql.PreparedStatement pstGet = conn.prepareStatement(sqlGetDefault);
-                java.sql.ResultSet rs = pstGet.executeQuery();
-
-                int kuotaDefault = 12; // Nilai jaga-jaga
-                if (rs.next()) {
-                    kuotaDefault = rs.getInt("kuota_cuti_default");
-                }
-
                 // 3. Update massal ke tabel karyawan
                 String sqlUpdateMassal = "UPDATE karyawan SET sisa_cuti = ? WHERE role = 'karyawan'";
                 java.sql.PreparedStatement pstUpdate = conn.prepareStatement(sqlUpdateMassal);
-                pstUpdate.setInt(1, kuotaDefault);
+                pstUpdate.setInt(1, kuotaBaru);
                 pstUpdate.execute();
 
-                javax.swing.JOptionPane.showMessageDialog(this, "Sukses! Kuota cuti seluruh karyawan telah di-reset menjadi " + kuotaDefault + " hari.");
+                // 4. Pesan sukses yang sesuai dengan angka input
+                javax.swing.JOptionPane.showMessageDialog(this, "Sukses! Kuota cuti seluruh karyawan telah di-reset menjadi " + kuotaBaru + " hari.");
 
                 // Refresh tabel karyawan agar datanya langsung terupdate di layar
-                loadTableKaryawan();
+                loadTableKaryawan(); 
             }
+        } catch (NumberFormatException ne) {
+            // Penanganan error jika Admin tidak sengaja mengetikkan huruf/teks di kolom kuota
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Pastikan kolom Kuota Cuti Tahunan HANYA diisi dengan angka!");
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Gagal mereset cuti massal: " + e.getMessage());
         }
     }//GEN-LAST:event_btnResetCutiMassalActionPerformed
 
     private void btnSimpanProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanProfilActionPerformed
-        try {
-            java.sql.Connection conn = KoneksiDB.getKoneksi();
-            // Menggunakan UPDATE karena datanya sudah ada (ID 1)
-            String sql = "UPDATE profil_perusahaan SET nama_perusahaan = ?, alamat = ?, telepon = ?, email = ? WHERE id = 1";
+            // 1. Ambil teks nomor telepon yang mengandung setrip (Hasil: 0812-3456-7890)
+            String teleponMentah = txtTelepon.getText();
 
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, txtNamaPerusahaan.getText());
-            pst.setString(2, txtAlamatPerusahaan.getText());
-            pst.setString(3, txtTelepon.getText());
-            pst.setString(4, txtEmail.getText());
+            // 2. Buang semua tanda setrip "-" dan ubah menjadi tanpa spasi "" (Hasil: 081234567890)
+            String teleponBersih = teleponMentah.replace("-", "").replace(" ", "");
 
-            pst.execute();
+            try {
+                java.sql.Connection conn = KoneksiDB.getKoneksi();
+                String sql = "UPDATE profil_perusahaan SET nama_perusahaan = ?, alamat = ?, telepon = ?, email = ? WHERE id = 1";
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Profil Perusahaan Berhasil Diperbarui!");
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, txtNamaPerusahaan.getText());
+                pst.setString(2, txtAlamatPerusahaan.getText());
 
-            // Opsional: Jika Anda ingin tulisan judul di sidebar/atas berubah otomatis
-            // lblTitleAplikasi.setText(txtNamaPerusahaan.getText());
+                // 3. Masukkan variabel yang SUDAH DIBERSIHKAN ke database
+                pst.setString(3, teleponBersih); 
 
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal memperbarui profil: " + e.getMessage());
-        }
+                pst.setString(4, txtEmail.getText());
+                pst.execute();
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Profil Perusahaan Berhasil Diperbarui!");
+
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal memperbarui profil: " + e.getMessage());
+            }
     }//GEN-LAST:event_btnSimpanProfilActionPerformed
 
     private void txtNamaPerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPerusahaanActionPerformed
@@ -1956,6 +1982,67 @@ if (baris != -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan lokasi: Pastikan radius hanya diisi dengan angka bulat (contoh: 50).\nError: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSimpanLokasiActionPerformed
+
+    private void btnSimpanAturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanAturanActionPerformed
+
+        // 1. Ambil teks dari inputan Formatted Field
+        String jamMasuk = txtJamMasuk.getText();
+        String jamKeluar = txtJamKeluar.getText();
+
+        // 2. VALIDASI: Cek apakah format jam masih bolong/mengandung spasi
+        if (jamMasuk.contains(" ") || jamKeluar.contains(" ")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Format jam belum lengkap! Harap isi semua angka (HH:MM:SS).");
+            return; // Hentikan proses simpan
+        }
+
+        try {
+            java.sql.Connection conn = KoneksiDB.getKoneksi();
+            String sql = "UPDATE pengaturan_sistem SET jam_masuk = ?, jam_keluar = ?, kuota_cuti_default = ? WHERE id = 1";
+
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, jamMasuk);  // Masukkan jam yang sudah tervalidasi
+            pst.setString(2, jamKeluar); // Masukkan jam yang sudah tervalidasi
+            pst.setString(3, txtKuotaCuti.getText());
+
+            pst.execute();
+            javax.swing.JOptionPane.showMessageDialog(this, "Pengaturan Jam Kerja & Cuti Berhasil Diperbarui!");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan pengaturan: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnSimpanAturanActionPerformed
+
+    private void txtRadiusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRadiusKeyTyped
+        char karakter = evt.getKeyChar();
+        // Cegah jika karakter yang diketik BUKAN angka
+        if (!Character.isDigit(karakter)) {
+            evt.consume(); // Perintah untuk membatalkan/menolak ketikan
+        }
+    }//GEN-LAST:event_txtRadiusKeyTyped
+
+    private void txtKuotaCutiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKuotaCutiKeyTyped
+        char karakter = evt.getKeyChar();
+        // Cegah jika karakter yang diketik BUKAN angka
+        if (!Character.isDigit(karakter)) {
+            evt.consume(); // Perintah untuk membatalkan/menolak ketikan
+        }
+    }//GEN-LAST:event_txtKuotaCutiKeyTyped
+
+    private void txtNamaPerusahaanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamaPerusahaanKeyTyped
+        char karakter = evt.getKeyChar();
+        // Izinkan hanya huruf dan spasi
+        if (!Character.isLetter(karakter) && !Character.isWhitespace(karakter)) {
+            evt.consume(); // Tolak angka dan simbol
+        }
+    }//GEN-LAST:event_txtNamaPerusahaanKeyTyped
+
+    private void txtNamaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamaKeyTyped
+        char karakter = evt.getKeyChar();
+        // Izinkan hanya huruf dan spasi
+        if (!Character.isLetter(karakter) && !Character.isWhitespace(karakter)) {
+            evt.consume(); // Tolak angka dan simbol
+        }
+    }//GEN-LAST:event_txtNamaKeyTyped
     
     private void loadProfilPerusahaan() {
         try {
@@ -2204,6 +2291,7 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JScrollPane scrPresensiHariIni;
     private javax.swing.JScrollPane scrpnlAturanCuti;
     private javax.swing.JScrollPane scrpnlGPS;
+    private javax.swing.JTabbedPane scrpnlKeamananAkun;
     private javax.swing.JScrollPane scrpnlProfilPerusahaan;
     private javax.swing.JTable tblCuti;
     private javax.swing.JTable tblDataPresensi;
@@ -2224,8 +2312,8 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JLabel txtDashboard2;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JLabel txtHadir;
-    private javax.swing.JTextField txtJamKeluar;
-    private javax.swing.JTextField txtJamMasuk;
+    private javax.swing.JFormattedTextField txtJamKeluar;
+    private javax.swing.JFormattedTextField txtJamMasuk;
     private javax.swing.JLabel txtKaryawan;
     private javax.swing.JTextField txtKuotaCuti;
     private javax.swing.JLabel txtLaporan;
@@ -2238,7 +2326,7 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JLabel txtPresensi;
     private javax.swing.JLabel txtPresensiHariIni;
     private javax.swing.JTextField txtRadius;
-    private javax.swing.JTextField txtTelepon;
+    private javax.swing.JFormattedTextField txtTelepon;
     private javax.swing.JLabel txtTotalKaryawan;
     private javax.swing.JTextField txtUsername;
     private javax.swing.JLabel txtWFOWFH;

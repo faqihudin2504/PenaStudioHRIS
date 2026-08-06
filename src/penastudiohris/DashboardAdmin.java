@@ -51,6 +51,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
             loadTablePekerjaan("");
             loadProfilPerusahaan();
             loadPengaturanSistem();
+            loadKeamananAkun();
             
             // Memberikan warna efek aktif pada tombol Dashboard di awal mula
             setTombolAktif(btnDashboard);
@@ -399,10 +400,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
         txtTelepon = new javax.swing.JFormattedTextField();
         scrpnlAturanCuti = new javax.swing.JScrollPane();
         pnlAturanCuti = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtKuotaCuti = new javax.swing.JTextField();
         btnResetCutiMassal = new javax.swing.JButton();
@@ -418,7 +417,17 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtRadius = new javax.swing.JTextField();
         btnSimpanLokasi = new javax.swing.JButton();
-        scrpnlKeamananAkun = new javax.swing.JTabbedPane();
+        scrpnlkeamanan = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        txtUsernameAdmin = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        btnSimpanKeamanan = new javax.swing.JButton();
+        txtPasswordLama = new javax.swing.JPasswordField();
+        txtPasswordBaru = new javax.swing.JPasswordField();
+        txtKonfirmasiPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1237,15 +1246,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         scrpnlAturanCuti.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Pengaturan Jam & Kerja");
-
         jLabel3.setText("Jam Masuk Standar");
 
         jLabel4.setText("Jam Keluar Standar");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Pengaturan Kuota Cuti");
 
         jLabel6.setText("Kuota Cuti Tahunan");
 
@@ -1261,7 +1264,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         btnResetCutiMassal.addActionListener(this::btnResetCutiMassalActionPerformed);
 
         btnSimpanAturan.setBackground(new java.awt.Color(153, 255, 102));
-        btnSimpanAturan.setText("Simpan Pengaturan");
+        btnSimpanAturan.setText("Simpan Perubahan");
         btnSimpanAturan.addActionListener(this::btnSimpanAturanActionPerformed);
 
         txtJamMasuk.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##:##:##"))));
@@ -1273,58 +1276,50 @@ public class DashboardAdmin extends javax.swing.JFrame {
         pnlAturanCutiLayout.setHorizontalGroup(
             pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(17, 17, 17)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAturanCutiLayout.createSequentialGroup()
+                            .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                                    .addComponent(btnResetCutiMassal)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnSimpanAturan, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtKuotaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(1, 1, 1)))
                     .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
-                    .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5))
-                    .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSimpanAturan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtKuotaCuti)
-                            .addComponent(btnResetCutiMassal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(182, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
         pnlAturanCutiLayout.setVerticalGroup(
             pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(17, 17, 17)
                 .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtKuotaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnResetCutiMassal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSimpanAturan)
-                .addContainerGap(330, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnResetCutiMassal)
+                    .addComponent(btnSimpanAturan))
+                .addContainerGap(376, Short.MAX_VALUE))
         );
 
         scrpnlAturanCuti.setViewportView(pnlAturanCuti);
@@ -1346,7 +1341,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         btnSimpanLokasi.setBackground(new java.awt.Color(153, 255, 102));
-        btnSimpanLokasi.setText("Simpan Lokasi");
+        btnSimpanLokasi.setText("Simpan Perubahan");
         btnSimpanLokasi.addActionListener(this::btnSimpanLokasiActionPerformed);
 
         javax.swing.GroupLayout pnlGPSLayout = new javax.swing.GroupLayout(pnlGPS);
@@ -1356,21 +1351,21 @@ public class DashboardAdmin extends javax.swing.JFrame {
             .addGroup(pnlGPSLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(pnlGPSLayout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtRadius, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlGPSLayout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtLatitude, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlGPSLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlGPSLayout.createSequentialGroup()
+                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnSimpanLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(119, Short.MAX_VALUE))
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLatitude, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlGPSLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(2, 2, 2)
+                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSimpanLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtRadius, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(135, 135, 135))
         );
         pnlGPSLayout.setVerticalGroup(
             pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1379,23 +1374,88 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtLatitude, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(25, 25, 25)
                 .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtRadius, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRadius, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addGap(18, 18, 18)
                 .addComponent(btnSimpanLokasi)
-                .addContainerGap(409, Short.MAX_VALUE))
+                .addContainerGap(378, Short.MAX_VALUE))
         );
 
         scrpnlGPS.setViewportView(pnlGPS);
 
         pnlLokasiKantor.addTab("Lokasi Kantor (GPS", scrpnlGPS);
-        pnlLokasiKantor.addTab("Keamanan Akun", scrpnlKeamananAkun);
+
+        scrpnlkeamanan.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jLabel10.setText("Username Admin");
+
+        jLabel11.setText("Password Lama");
+
+        jLabel12.setText("Password Baru");
+
+        jLabel13.setText("Konfirmasi Password");
+
+        btnSimpanKeamanan.setBackground(new java.awt.Color(153, 255, 102));
+        btnSimpanKeamanan.setText("Simpan Perubahan");
+        btnSimpanKeamanan.addActionListener(this::btnSimpanKeamananActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel10))
+                        .addGap(71, 71, 71))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(53, 53, 53)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtUsernameAdmin)
+                    .addComponent(btnSimpanKeamanan, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(txtPasswordLama)
+                    .addComponent(txtPasswordBaru)
+                    .addComponent(txtKonfirmasiPassword))
+                .addContainerGap(141, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtUsernameAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtPasswordLama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(txtPasswordBaru, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13)
+                    .addComponent(txtKonfirmasiPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnSimpanKeamanan)
+                .addContainerGap(366, Short.MAX_VALUE))
+        );
+
+        scrpnlkeamanan.setViewportView(jPanel1);
+
+        pnlLokasiKantor.addTab("Keamanan Akun", scrpnlkeamanan);
 
         javax.swing.GroupLayout pnlPengaturanLayout = new javax.swing.GroupLayout(pnlPengaturan);
         pnlPengaturan.setLayout(pnlPengaturanLayout);
@@ -1895,72 +1955,13 @@ if (baris != -1) {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbBulanActionPerformed
 
-    private void btnResetCutiMassalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetCutiMassalActionPerformed
-        try {
-            // 1. Ambil angka secara langsung dari kolom teks (real-time)
-            int kuotaBaru = Integer.parseInt(txtKuotaCuti.getText());
-
-            // 2. Tampilkan pesan peringatan yang angkanya sudah dinamis
-            int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this, 
-                    "PERINGATAN: Aksi ini akan mengubah sisa cuti SELURUH karyawan menjadi " + kuotaBaru + " hari.\nApakah Anda benar-benar yakin ingin mereset kuota cuti massal?", 
-                    "Konfirmasi Reset Massal", 
-                    javax.swing.JOptionPane.YES_NO_OPTION,
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-
-            if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
-                java.sql.Connection conn = KoneksiDB.getKoneksi();
-
-                // 3. Update massal ke tabel karyawan
-                String sqlUpdateMassal = "UPDATE karyawan SET sisa_cuti = ? WHERE role = 'karyawan'";
-                java.sql.PreparedStatement pstUpdate = conn.prepareStatement(sqlUpdateMassal);
-                pstUpdate.setInt(1, kuotaBaru);
-                pstUpdate.execute();
-
-                // 4. Pesan sukses yang sesuai dengan angka input
-                javax.swing.JOptionPane.showMessageDialog(this, "Sukses! Kuota cuti seluruh karyawan telah di-reset menjadi " + kuotaBaru + " hari.");
-
-                // Refresh tabel karyawan agar datanya langsung terupdate di layar
-                loadTableKaryawan(); 
-            }
-        } catch (NumberFormatException ne) {
-            // Penanganan error jika Admin tidak sengaja mengetikkan huruf/teks di kolom kuota
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Pastikan kolom Kuota Cuti Tahunan HANYA diisi dengan angka!");
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal mereset cuti massal: " + e.getMessage());
+    private void txtNamaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamaKeyTyped
+        char karakter = evt.getKeyChar();
+        // Izinkan hanya huruf dan spasi
+        if (!Character.isLetter(karakter) && !Character.isWhitespace(karakter)) {
+            evt.consume(); // Tolak angka dan simbol
         }
-    }//GEN-LAST:event_btnResetCutiMassalActionPerformed
-
-    private void btnSimpanProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanProfilActionPerformed
-            // 1. Ambil teks nomor telepon yang mengandung setrip (Hasil: 0812-3456-7890)
-            String teleponMentah = txtTelepon.getText();
-
-            // 2. Buang semua tanda setrip "-" dan ubah menjadi tanpa spasi "" (Hasil: 081234567890)
-            String teleponBersih = teleponMentah.replace("-", "").replace(" ", "");
-
-            try {
-                java.sql.Connection conn = KoneksiDB.getKoneksi();
-                String sql = "UPDATE profil_perusahaan SET nama_perusahaan = ?, alamat = ?, telepon = ?, email = ? WHERE id = 1";
-
-                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, txtNamaPerusahaan.getText());
-                pst.setString(2, txtAlamatPerusahaan.getText());
-
-                // 3. Masukkan variabel yang SUDAH DIBERSIHKAN ke database
-                pst.setString(3, teleponBersih); 
-
-                pst.setString(4, txtEmail.getText());
-                pst.execute();
-
-                javax.swing.JOptionPane.showMessageDialog(this, "Profil Perusahaan Berhasil Diperbarui!");
-
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Gagal memperbarui profil: " + e.getMessage());
-            }
-    }//GEN-LAST:event_btnSimpanProfilActionPerformed
-
-    private void txtNamaPerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPerusahaanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNamaPerusahaanActionPerformed
+    }//GEN-LAST:event_txtNamaKeyTyped
 
     private void btnSimpanLokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanLokasiActionPerformed
         try {
@@ -1982,6 +1983,14 @@ if (baris != -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan lokasi: Pastikan radius hanya diisi dengan angka bulat (contoh: 50).\nError: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSimpanLokasiActionPerformed
+
+    private void txtRadiusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRadiusKeyTyped
+        char karakter = evt.getKeyChar();
+        // Cegah jika karakter yang diketik BUKAN angka
+        if (!Character.isDigit(karakter)) {
+            evt.consume(); // Perintah untuk membatalkan/menolak ketikan
+        }
+    }//GEN-LAST:event_txtRadiusKeyTyped
 
     private void btnSimpanAturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanAturanActionPerformed
 
@@ -2012,13 +2021,40 @@ if (baris != -1) {
         }
     }//GEN-LAST:event_btnSimpanAturanActionPerformed
 
-    private void txtRadiusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRadiusKeyTyped
-        char karakter = evt.getKeyChar();
-        // Cegah jika karakter yang diketik BUKAN angka
-        if (!Character.isDigit(karakter)) {
-            evt.consume(); // Perintah untuk membatalkan/menolak ketikan
+    private void btnResetCutiMassalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetCutiMassalActionPerformed
+        try {
+            // 1. Ambil angka secara langsung dari kolom teks (real-time)
+            int kuotaBaru = Integer.parseInt(txtKuotaCuti.getText());
+
+            // 2. Tampilkan pesan peringatan yang angkanya sudah dinamis
+            int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this,
+                "PERINGATAN: Aksi ini akan mengubah sisa cuti SELURUH karyawan menjadi " + kuotaBaru + " hari.\nApakah Anda benar-benar yakin ingin mereset kuota cuti massal?",
+                "Konfirmasi Reset Massal",
+                javax.swing.JOptionPane.YES_NO_OPTION,
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+
+            if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+                java.sql.Connection conn = KoneksiDB.getKoneksi();
+
+                // 3. Update massal ke tabel karyawan
+                String sqlUpdateMassal = "UPDATE karyawan SET sisa_cuti = ? WHERE role = 'karyawan'";
+                java.sql.PreparedStatement pstUpdate = conn.prepareStatement(sqlUpdateMassal);
+                pstUpdate.setInt(1, kuotaBaru);
+                pstUpdate.execute();
+
+                // 4. Pesan sukses yang sesuai dengan angka input
+                javax.swing.JOptionPane.showMessageDialog(this, "Sukses! Kuota cuti seluruh karyawan telah di-reset menjadi " + kuotaBaru + " hari.");
+
+                // Refresh tabel karyawan agar datanya langsung terupdate di layar
+                loadTableKaryawan();
+            }
+        } catch (NumberFormatException ne) {
+            // Penanganan error jika Admin tidak sengaja mengetikkan huruf/teks di kolom kuota
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Pastikan kolom Kuota Cuti Tahunan HANYA diisi dengan angka!");
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal mereset cuti massal: " + e.getMessage());
         }
-    }//GEN-LAST:event_txtRadiusKeyTyped
+    }//GEN-LAST:event_btnResetCutiMassalActionPerformed
 
     private void txtKuotaCutiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKuotaCutiKeyTyped
         char karakter = evt.getKeyChar();
@@ -2028,6 +2064,34 @@ if (baris != -1) {
         }
     }//GEN-LAST:event_txtKuotaCutiKeyTyped
 
+    private void btnSimpanProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanProfilActionPerformed
+        // 1. Ambil teks nomor telepon yang mengandung setrip (Hasil: 0812-3456-7890)
+        String teleponMentah = txtTelepon.getText();
+
+        // 2. Buang semua tanda setrip "-" dan ubah menjadi tanpa spasi "" (Hasil: 081234567890)
+        String teleponBersih = teleponMentah.replace("-", "").replace(" ", "");
+
+        try {
+            java.sql.Connection conn = KoneksiDB.getKoneksi();
+            String sql = "UPDATE profil_perusahaan SET nama_perusahaan = ?, alamat = ?, telepon = ?, email = ? WHERE id = 1";
+
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, txtNamaPerusahaan.getText());
+            pst.setString(2, txtAlamatPerusahaan.getText());
+
+            // 3. Masukkan variabel yang SUDAH DIBERSIHKAN ke database
+            pst.setString(3, teleponBersih);
+
+            pst.setString(4, txtEmail.getText());
+            pst.execute();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Profil Perusahaan Berhasil Diperbarui!");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal memperbarui profil: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnSimpanProfilActionPerformed
+
     private void txtNamaPerusahaanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamaPerusahaanKeyTyped
         char karakter = evt.getKeyChar();
         // Izinkan hanya huruf dan spasi
@@ -2036,13 +2100,64 @@ if (baris != -1) {
         }
     }//GEN-LAST:event_txtNamaPerusahaanKeyTyped
 
-    private void txtNamaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamaKeyTyped
-        char karakter = evt.getKeyChar();
-        // Izinkan hanya huruf dan spasi
-        if (!Character.isLetter(karakter) && !Character.isWhitespace(karakter)) {
-            evt.consume(); // Tolak angka dan simbol
+    private void txtNamaPerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPerusahaanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamaPerusahaanActionPerformed
+
+    private void btnSimpanKeamananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanKeamananActionPerformed
+        try {
+            // 1. Mengambil teks dari form
+            String userBaru = txtUsernameAdmin.getText();
+            String passLama = new String(txtPasswordLama.getPassword()); // Cara mengambil teks dari JPasswordField
+            String passBaru = new String(txtPasswordBaru.getPassword());
+            String passKonfirm = new String(txtKonfirmasiPassword.getPassword());
+
+            // 2. Validasi Kolom Kosong
+            if (userBaru.isEmpty() || passLama.isEmpty() || passBaru.isEmpty() || passKonfirm.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Semua kolom wajib diisi!");
+                return;
+            }
+
+            // 3. Validasi Kecocokan Password Baru
+            if (!passBaru.equals(passKonfirm)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Password Baru dan Konfirmasi Password tidak cocok!");
+                return;
+            }
+
+            java.sql.Connection conn = KoneksiDB.getKoneksi();
+
+            // 4. Mengecek apakah Password Lama yang diketikkan BENAR
+            String sqlCek = "SELECT password FROM karyawan WHERE role = 'admin' LIMIT 1";
+            java.sql.PreparedStatement pstCek = conn.prepareStatement(sqlCek);
+            java.sql.ResultSet rs = pstCek.executeQuery();
+
+            if (rs.next()) {
+                String passwordDiDatabase = rs.getString("password");
+
+                if (!passLama.equals(passwordDiDatabase)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Password Lama yang Anda masukkan SALAH!");
+                    return;
+                }
+            }
+
+            // 5. Jika semua validasi lolos, jalankan UPDATE ke database
+            String sqlUpdate = "UPDATE karyawan SET username = ?, password = ? WHERE role = 'admin'";
+            java.sql.PreparedStatement pstUpdate = conn.prepareStatement(sqlUpdate);
+            pstUpdate.setString(1, userBaru);
+            pstUpdate.setString(2, passBaru);
+            pstUpdate.execute();
+
+            // 6. Notifikasi sukses dan bersihkan kolom password
+            javax.swing.JOptionPane.showMessageDialog(this, "Keamanan Akun Berhasil Diperbarui!\nSilakan gunakan password baru ini saat login berikutnya.");
+
+            txtPasswordLama.setText("");
+            txtPasswordBaru.setText("");
+            txtKonfirmasiPassword.setText("");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Terjadi kesalahan sistem: " + e.getMessage());
         }
-    }//GEN-LAST:event_txtNamaKeyTyped
+    }//GEN-LAST:event_btnSimpanKeamananActionPerformed
     
     private void loadProfilPerusahaan() {
         try {
@@ -2180,6 +2295,22 @@ private void loadTableLaporan(String bulan, String tahun) {
         tombolAktif.setBackground(new java.awt.Color(51,153,255)); 
     }
     
+    private void loadKeamananAkun() {
+    try {
+        java.sql.Connection conn = KoneksiDB.getKoneksi();
+        // Mengambil username yang memiliki hak akses (role) sebagai admin
+        String sql = "SELECT username FROM karyawan WHERE role = 'admin' LIMIT 1";
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        java.sql.ResultSet rs = pst.executeQuery();
+        
+        if (rs.next()) {
+            txtUsernameAdmin.setText(rs.getString("username"));
+        }
+    } catch (Exception e) {
+        System.out.println("Error load keamanan akun: " + e.getMessage());
+    }
+}
+    
     /**
      * @param args the command line arguments
      */
@@ -2228,20 +2359,24 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JButton btnResetCutiMassal;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnSimpanAturan;
+    private javax.swing.JButton btnSimpanKeamanan;
     private javax.swing.JButton btnSimpanLokasi;
     private javax.swing.JButton btnSimpanProfil;
     private javax.swing.JButton btnTampilLaporan;
     private javax.swing.JComboBox<String> cbBulan;
     private javax.swing.JComboBox<String> cbTahun;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -2291,8 +2426,8 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JScrollPane scrPresensiHariIni;
     private javax.swing.JScrollPane scrpnlAturanCuti;
     private javax.swing.JScrollPane scrpnlGPS;
-    private javax.swing.JTabbedPane scrpnlKeamananAkun;
     private javax.swing.JScrollPane scrpnlProfilPerusahaan;
+    private javax.swing.JScrollPane scrpnlkeamanan;
     private javax.swing.JTable tblCuti;
     private javax.swing.JTable tblDataPresensi;
     private javax.swing.JTable tblKaryawan;
@@ -2315,6 +2450,7 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JFormattedTextField txtJamKeluar;
     private javax.swing.JFormattedTextField txtJamMasuk;
     private javax.swing.JLabel txtKaryawan;
+    private javax.swing.JPasswordField txtKonfirmasiPassword;
     private javax.swing.JTextField txtKuotaCuti;
     private javax.swing.JLabel txtLaporan;
     private javax.swing.JTextField txtLatitude;
@@ -2322,6 +2458,8 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtNamaPerusahaan;
     private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPasswordBaru;
+    private javax.swing.JPasswordField txtPasswordLama;
     private javax.swing.JLabel txtPengaturan;
     private javax.swing.JLabel txtPresensi;
     private javax.swing.JLabel txtPresensiHariIni;
@@ -2329,6 +2467,7 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JFormattedTextField txtTelepon;
     private javax.swing.JLabel txtTotalKaryawan;
     private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtUsernameAdmin;
     private javax.swing.JLabel txtWFOWFH;
     // End of variables declaration//GEN-END:variables
 }

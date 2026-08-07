@@ -1,18 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package penastudiohris;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author HP
- */
 public class LoginForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginForm.class.getName());
@@ -24,6 +15,25 @@ public class LoginForm extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
+    
+    // Metode untuk mengacak password agar cocok dengan database
+        private String hashPassword(String password) {
+            try {
+                java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+                byte[] encodedhash = digest.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                StringBuilder hexString = new StringBuilder(2 * encodedhash.length);
+                for (int i = 0; i < encodedhash.length; i++) {
+                    String hex = Integer.toHexString(0xff & encodedhash[i]);
+                    if(hex.length() == 1) {
+                        hexString.append('0');
+                    }
+                    hexString.append(hex);
+                }
+                return hexString.toString();
+            } catch (Exception e) {
+                throw new RuntimeException("Error hashing password", e);
+            }
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -176,7 +186,7 @@ public class LoginForm extends javax.swing.JFrame {
     Connection conn = KoneksiDB.getKoneksi();
     PreparedStatement pst = conn.prepareStatement(sql);
     pst.setString(1, user);
-    pst.setString(2, pass);
+    pst.setString(2, hashPassword(pass));
     
     ResultSet rs = pst.executeQuery();
     
@@ -197,6 +207,8 @@ public class LoginForm extends javax.swing.JFrame {
         // Jika salah ketik atau bukan admin
         JOptionPane.showMessageDialog(this, "Login Gagal! Username atau Password salah.", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
+    
     
 } catch (Exception e) {
     JOptionPane.showMessageDialog(this, "Terjadi kesalahan koneksi: " + e.getMessage());
@@ -226,7 +238,10 @@ public class LoginForm extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new LoginForm().setVisible(true));
+        
+        
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;

@@ -398,6 +398,17 @@ public class DashboardAdmin extends javax.swing.JFrame {
         txtAlamatPerusahaan = new javax.swing.JTextArea();
         btnSimpanProfil = new javax.swing.JButton();
         txtTelepon = new javax.swing.JFormattedTextField();
+        scrpnlkeamanan = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        txtUsernameAdmin = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        btnSimpanKeamanan = new javax.swing.JButton();
+        txtPasswordLama = new javax.swing.JPasswordField();
+        txtPasswordBaru = new javax.swing.JPasswordField();
+        txtKonfirmasiPassword = new javax.swing.JPasswordField();
         scrpnlAturanCuti = new javax.swing.JScrollPane();
         pnlAturanCuti = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -417,17 +428,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtRadius = new javax.swing.JTextField();
         btnSimpanLokasi = new javax.swing.JButton();
-        scrpnlkeamanan = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        txtUsernameAdmin = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        btnSimpanKeamanan = new javax.swing.JButton();
-        txtPasswordLama = new javax.swing.JPasswordField();
-        txtPasswordBaru = new javax.swing.JPasswordField();
-        txtKonfirmasiPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1165,6 +1165,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         txtPengaturan.setText("Pengaturan");
 
         scrpnlProfilPerusahaan.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrpnlProfilPerusahaan.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         lblNamaPerusahaan.setText("Nama Perusahaan");
 
@@ -1198,21 +1199,21 @@ public class DashboardAdmin extends javax.swing.JFrame {
             .addGroup(pnlProfilPerusahaanLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProfilPerusahaanLayout.createSequentialGroup()
+                    .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(pnlProfilPerusahaanLayout.createSequentialGroup()
                             .addComponent(lblNamaPerusahaan)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtNamaPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProfilPerusahaanLayout.createSequentialGroup()
+                            .addGap(36, 36, 36)
+                            .addComponent(txtNamaPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlProfilPerusahaanLayout.createSequentialGroup()
                             .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblEmail)
                                 .addComponent(lblAlamatLengkap)
                                 .addComponent(lblTelepon))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlProfilPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
-                                .addComponent(jScrollPane6)
-                                .addComponent(txtTelepon))))
+                                .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtTelepon)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))))
                     .addComponent(btnSimpanProfil, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(163, Short.MAX_VALUE))
         );
@@ -1244,154 +1245,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         pnlLokasiKantor.addTab("Profil Perusahaan", scrpnlProfilPerusahaan);
 
-        scrpnlAturanCuti.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        jLabel3.setText("Jam Masuk Standar");
-
-        jLabel4.setText("Jam Keluar Standar");
-
-        jLabel6.setText("Kuota Cuti Tahunan");
-
-        txtKuotaCuti.setText("12");
-        txtKuotaCuti.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtKuotaCutiKeyTyped(evt);
-            }
-        });
-
-        btnResetCutiMassal.setBackground(new java.awt.Color(255, 153, 0));
-        btnResetCutiMassal.setText("Reset Kuota Cuti Massal");
-        btnResetCutiMassal.addActionListener(this::btnResetCutiMassalActionPerformed);
-
-        btnSimpanAturan.setBackground(new java.awt.Color(153, 255, 102));
-        btnSimpanAturan.setText("Simpan Perubahan");
-        btnSimpanAturan.addActionListener(this::btnSimpanAturanActionPerformed);
-
-        txtJamMasuk.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##:##:##"))));
-
-        txtJamKeluar.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
-
-        javax.swing.GroupLayout pnlAturanCutiLayout = new javax.swing.GroupLayout(pnlAturanCuti);
-        pnlAturanCuti.setLayout(pnlAturanCutiLayout);
-        pnlAturanCutiLayout.setHorizontalGroup(
-            pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAturanCutiLayout.createSequentialGroup()
-                            .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                                    .addComponent(btnResetCutiMassal)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnSimpanAturan, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtKuotaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(1, 1, 1)))
-                    .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(194, Short.MAX_VALUE))
-        );
-        pnlAturanCutiLayout.setVerticalGroup(
-            pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAturanCutiLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(17, 17, 17)
-                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtKuotaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnResetCutiMassal)
-                    .addComponent(btnSimpanAturan))
-                .addContainerGap(376, Short.MAX_VALUE))
-        );
-
-        scrpnlAturanCuti.setViewportView(pnlAturanCuti);
-
-        pnlLokasiKantor.addTab("Aturan & Cuti", scrpnlAturanCuti);
-
-        scrpnlGPS.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        jLabel7.setText("Longitude Kantor");
-
-        jLabel8.setText("Latitude Kantor");
-
-        jLabel9.setText("Batas Radius (Meter)");
-
-        txtRadius.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtRadiusKeyTyped(evt);
-            }
-        });
-
-        btnSimpanLokasi.setBackground(new java.awt.Color(153, 255, 102));
-        btnSimpanLokasi.setText("Simpan Perubahan");
-        btnSimpanLokasi.addActionListener(this::btnSimpanLokasiActionPerformed);
-
-        javax.swing.GroupLayout pnlGPSLayout = new javax.swing.GroupLayout(pnlGPS);
-        pnlGPS.setLayout(pnlGPSLayout);
-        pnlGPSLayout.setHorizontalGroup(
-            pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGPSLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlGPSLayout.createSequentialGroup()
-                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLatitude, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlGPSLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(2, 2, 2)
-                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSimpanLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtRadius, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(135, 135, 135))
-        );
-        pnlGPSLayout.setVerticalGroup(
-            pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGPSLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtLatitude, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtRadius, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addGap(18, 18, 18)
-                .addComponent(btnSimpanLokasi)
-                .addContainerGap(378, Short.MAX_VALUE))
-        );
-
-        scrpnlGPS.setViewportView(pnlGPS);
-
-        pnlLokasiKantor.addTab("Lokasi Kantor (GPS", scrpnlGPS);
-
         scrpnlkeamanan.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrpnlkeamanan.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         jLabel10.setText("Username Admin");
 
@@ -1457,6 +1312,155 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         pnlLokasiKantor.addTab("Keamanan Akun", scrpnlkeamanan);
 
+        scrpnlAturanCuti.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrpnlAturanCuti.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        jLabel3.setText("Jam Masuk Standar");
+
+        jLabel4.setText("Jam Keluar Standar");
+
+        jLabel6.setText("Kuota Cuti Tahunan");
+
+        txtKuotaCuti.setText("12");
+        txtKuotaCuti.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtKuotaCutiKeyTyped(evt);
+            }
+        });
+
+        btnResetCutiMassal.setBackground(new java.awt.Color(255, 153, 0));
+        btnResetCutiMassal.setText("Reset Kuota Cuti Massal");
+        btnResetCutiMassal.addActionListener(this::btnResetCutiMassalActionPerformed);
+
+        btnSimpanAturan.setBackground(new java.awt.Color(153, 255, 102));
+        btnSimpanAturan.setText("Simpan Perubahan");
+        btnSimpanAturan.addActionListener(this::btnSimpanAturanActionPerformed);
+
+        txtJamMasuk.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##:##:##"))));
+
+        txtJamKeluar.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
+
+        javax.swing.GroupLayout pnlAturanCutiLayout = new javax.swing.GroupLayout(pnlAturanCuti);
+        pnlAturanCuti.setLayout(pnlAturanCutiLayout);
+        pnlAturanCutiLayout.setHorizontalGroup(
+            pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAturanCutiLayout.createSequentialGroup()
+                            .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                                    .addComponent(btnResetCutiMassal)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnSimpanAturan, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(53, 53, 53)
+                                    .addComponent(txtKuotaCuti)))
+                            .addGap(1, 1, 1)))
+                    .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(59, 59, 59)
+                        .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(194, Short.MAX_VALUE))
+        );
+        pnlAturanCutiLayout.setVerticalGroup(
+            pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAturanCutiLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtJamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtJamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(17, 17, 17)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtKuotaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(pnlAturanCutiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnResetCutiMassal)
+                    .addComponent(btnSimpanAturan))
+                .addContainerGap(376, Short.MAX_VALUE))
+        );
+
+        scrpnlAturanCuti.setViewportView(pnlAturanCuti);
+
+        pnlLokasiKantor.addTab("Aturan & Cuti", scrpnlAturanCuti);
+
+        scrpnlGPS.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrpnlGPS.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        jLabel7.setText("Longitude Kantor");
+
+        jLabel8.setText("Latitude Kantor");
+
+        jLabel9.setText("Batas Radius (Meter)");
+
+        txtRadius.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRadiusKeyTyped(evt);
+            }
+        });
+
+        btnSimpanLokasi.setBackground(new java.awt.Color(153, 255, 102));
+        btnSimpanLokasi.setText("Simpan Perubahan");
+        btnSimpanLokasi.addActionListener(this::btnSimpanLokasiActionPerformed);
+
+        javax.swing.GroupLayout pnlGPSLayout = new javax.swing.GroupLayout(pnlGPS);
+        pnlGPS.setLayout(pnlGPSLayout);
+        pnlGPSLayout.setHorizontalGroup(
+            pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlGPSLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnlGPSLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(21, 21, 21)
+                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSimpanLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtRadius, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)))
+                    .addGroup(pnlGPSLayout.createSequentialGroup()
+                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(37, 37, 37)
+                        .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtLongitude, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                            .addComponent(txtLatitude))))
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+        pnlGPSLayout.setVerticalGroup(
+            pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlGPSLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtLatitude, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(pnlGPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtRadius, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnSimpanLokasi)
+                .addContainerGap(375, Short.MAX_VALUE))
+        );
+
+        scrpnlGPS.setViewportView(pnlGPS);
+
+        pnlLokasiKantor.addTab("Lokasi Kantor (GPS", scrpnlGPS);
+
         javax.swing.GroupLayout pnlPengaturanLayout = new javax.swing.GroupLayout(pnlPengaturan);
         pnlPengaturan.setLayout(pnlPengaturanLayout);
         pnlPengaturanLayout.setHorizontalGroup(
@@ -1474,8 +1478,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(txtPengaturan)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlLokasiKantor, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(pnlLokasiKantor, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlPengaturan, "card8");
@@ -1635,7 +1639,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         java.sql.PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, txtNama.getText());
         pst.setString(2, txtUsername.getText());
-        pst.setString(3, txtPassword.getText());
+        pst.setString(3, hashPassword(txtPassword.getText()));
 
         pst.execute(); // Eksekusi query
 
@@ -1704,7 +1708,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         pst = conn.prepareStatement(sql);
         pst.setString(1, txtNama.getText());
         pst.setString(2, txtUsername.getText());
-        pst.setString(3, txtPassword.getText());
+        pst.setString(3, hashPassword(txtPassword.getText()));
         pst.setString(4, idKaryawanTerpilih);
     }
     
@@ -2134,7 +2138,7 @@ if (baris != -1) {
             if (rs.next()) {
                 String passwordDiDatabase = rs.getString("password");
 
-                if (!passLama.equals(passwordDiDatabase)) {
+               if (!hashPassword(passLama).equals(passwordDiDatabase)) {
                     javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Password Lama yang Anda masukkan SALAH!");
                     return;
                 }
@@ -2144,7 +2148,7 @@ if (baris != -1) {
             String sqlUpdate = "UPDATE karyawan SET username = ?, password = ? WHERE role = 'admin'";
             java.sql.PreparedStatement pstUpdate = conn.prepareStatement(sqlUpdate);
             pstUpdate.setString(1, userBaru);
-            pstUpdate.setString(2, passBaru);
+            pstUpdate.setString(2, (hashPassword(passBaru)));
             pstUpdate.execute();
 
             // 6. Notifikasi sukses dan bersihkan kolom password
@@ -2310,6 +2314,25 @@ private void loadTableLaporan(String bulan, String tahun) {
         System.out.println("Error load keamanan akun: " + e.getMessage());
     }
 }
+    
+    // Metode untuk mengacak (Hashing) password menggunakan SHA-256
+        private String hashPassword(String password) {
+            try {
+                java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+                byte[] encodedhash = digest.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                StringBuilder hexString = new StringBuilder(2 * encodedhash.length);
+                for (int i = 0; i < encodedhash.length; i++) {
+                    String hex = Integer.toHexString(0xff & encodedhash[i]);
+                    if(hex.length() == 1) {
+                        hexString.append('0');
+                    }
+                    hexString.append(hex);
+                }
+                return hexString.toString();
+            } catch (Exception e) {
+                throw new RuntimeException("Error hashing password", e);
+            }
+        }
     
     /**
      * @param args the command line arguments

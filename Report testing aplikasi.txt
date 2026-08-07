@@ -1,0 +1,62 @@
+🏠 1. Modul Navigasi & Dashboard
+[✅] Efek Tombol Aktif: Klik semua menu di sidebar bergantian. Pastikan tombol yang sedang diklik berubah warna menjadi biru, dan panel di sebelah kanan ikut berubah.
+
+[✅] Data Ringkasan: Cek kotak warna-warni (Merah, Hijau, Tosca, Kuning). Apakah angkanya sesuai dengan data dummy yang ada di database Anda hari ini?
+
+[✅] Tabel Otomatis: Pastikan tabel "Presensi Hari Ini" dan "Notifikasi Pengajuan Cuti" terisi data (jika ada data dengan tanggal hari ini di database).
+
+👥 2. Modul Kelola Data Karyawan (CRUD)
+[✅] Simpan Karyawan Baru: Isi Nama, Username, dan Password, lalu klik "Simpan". Pastikan muncul pop-up sukses dan data langsung masuk ke tabel di bawahnya.
+
+[✅] Validasi Kosong: Kosongkan semua form, lalu klik "Simpan". Pastikan muncul peringatan "Semua kolom wajib diisi!" dan data tidak tersimpan.
+
+[✅] Fungsi Klik Tabel: Klik salah satu baris karyawan di tabel. Pastikan kolom isian Nama dan Username di atasnya langsung terisi otomatis sesuai baris yang diklik (sedangkan Password tetap kosong).
+
+[✅] Edit Data: Setelah mengklik baris tabel, ubah nama karyawan tersebut, lalu klik "Edit". Pastikan namanya di tabel langsung berubah.
+
+[✅] Hapus Data: Klik salah satu baris, klik "Hapus", dan pilih "Yes" pada pop-up konfirmasi. Pastikan datanya hilang dari tabel.
+
+[✅] Reset Form: Isi form secara acak, lalu klik "Reset". Pastikan semua isian kembali kosong dan sorotan pada tabel menghilang.
+
+⏱️ 3. Modul Data Presensi
+[✅] Tampil Riwayat: Pastikan semua data absen masuk. Perhatikan kolom "Jam Keluar", jika di database masih NULL, pastikan di tabel tertulis "Belum Keluar".
+
+[✅] Pencarian Nama: Ketik nama karyawan (misal: "Budi"), klik "Cari". Pastikan tabel hanya menampilkan data si Budi.
+
+[✅] Refresh: Klik tombol "Refresh", pastikan tabel kembali menampilkan data seluruh karyawan secara utuh.
+
+🏖️ 4. Modul Approval Cuti & Izin
+[✅] Klik Baris Cuti: Klik salah satu pengajuan cuti di tabel. Pastikan kotak "Alasan Cuti" terisi. Jika di database ada nama file fotonya, pastikan fotonya muncul. Jika tidak ada, pastikan muncul teks "Tidak ada lampiran foto".
+
+[✅] Aksi Setujui (Approve): Pilih satu cuti, klik "Setujui". Pastikan pop-up sukses muncul, data di tabel ter-refresh, dan sisa cuti karyawan tersebut di tabel Karyawan berkurang (terpotong sesuai jumlah hari).
+
+[✅] Aksi Tolak (Reject): Pilih satu cuti lain, klik "Tolak". Pastikan statusnya berubah menjadi REJECTED.
+
+[✅] Validasi Lupa Klik: Jangan klik tabel apapun, langsung klik tombol "Setujui" atau "Tolak". Pastikan sistem menegur untuk memilih data terlebih dahulu.
+
+📋 5. Modul Daftar Pekerjaan
+[ ] Format Status: Pastikan tulisan di database (seperti todo, in_progress) sudah otomatis berubah menjadi bahasa Indonesia yang rapi (Belum Dikerjakan, Sedang Dikerjakan).
+
+[ ] Pencarian: Tes mencari pekerjaan berdasarkan nama karyawan tertentu.
+
+📊 6. Modul Laporan (Report)
+[ ] Tampil Rekap: Pilih Bulan (misal: 8) dan Tahun (misal: 2026). Klik "Tampilkan Laporan". Pastikan tabel menampilkan hasil jumlah WFO dan WFH.
+
+[ ] Ekspor Excel (CSV): Klik tombol Ekspor, simpan filenya di folder Documents. Buka file tersebut dengan Excel dan pastikan kolom-kolomnya terpisah dengan rapi.
+
+⚙️ 7. Modul Pengaturan (Sangat Penting)
+[ ] Geofencing (Tab Lokasi): Pastikan koordinat Latitude, Longitude, dan Radius muncul. Ubah angkanya dan simpan.
+
+[ ] Validasi Input Angka (Tab Aturan & Cuti): Coba ketikkan huruf (A, B, C) pada kolom "Kuota Cuti Tahunan" dan "Batas Radius". Pastikan keyboard Anda terblokir dan tidak ada huruf yang masuk.
+
+[ ] Validasi Jam (Tab Aturan): Hapus satu digit jam masuk (sehingga menyisakan spasi, misal 08:0 :00). Klik "Simpan Pengaturan". Pastikan sistem menolak dan meminta format penuh.
+
+[ ] Reset Cuti Massal: Ubah angka "Kuota Cuti Tahunan" di layar menjadi 15. Klik tombol oranye "Reset Kuota Cuti Massal". Pastikan pop-up yang muncul menyebutkan angka 15 (bukan 12). Klik "Yes", lalu periksa di menu "Data Karyawan", apakah sisa cuti semua orang sudah menjadi 15.
+
+[ ] Keamanan Akun (Tab Keamanan):
+
+Masukkan Password Lama yang salah. Klik Simpan. Pastikan ditolak.
+
+Masukkan Password Lama yang benar, tapi Password Baru dan Konfirmasi Password beda ketikan. Pastikan ditolak.
+
+Masukkan semuanya dengan benar. Klik Simpan. Pastikan berhasil diubah.

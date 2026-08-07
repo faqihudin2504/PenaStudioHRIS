@@ -336,7 +336,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         lblPassword = new javax.swing.JLabel();
         txtNama = new javax.swing.JTextField();
         txtUsername = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
@@ -346,6 +345,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
         tblKaryawan = new javax.swing.JTable();
         lblDataKaryawan = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        txtPassword = new javax.swing.JPasswordField();
+        lblKonfirmasiPassword = new javax.swing.JLabel();
+        txtKonfirmPass = new javax.swing.JPasswordField();
         pnlPresensi = new javax.swing.JPanel();
         txtPresensi = new javax.swing.JLabel();
         lblCariNama = new javax.swing.JLabel();
@@ -770,6 +772,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
         lblDataKaryawan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDataKaryawan.setText("Daftar Data Karyawan");
 
+        txtPassword.addActionListener(this::txtPasswordActionPerformed);
+
+        lblKonfirmasiPassword.setText("Konfirmasi Password");
+
         javax.swing.GroupLayout pnlKaryawanLayout = new javax.swing.GroupLayout(pnlKaryawan);
         pnlKaryawan.setLayout(pnlKaryawanLayout);
         pnlKaryawanLayout.setHorizontalGroup(
@@ -777,6 +783,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
             .addGroup(pnlKaryawanLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblKonfirmasiPassword)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDataKaryawan)
                     .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -787,19 +794,21 @@ public class DashboardAdmin extends javax.swing.JFrame {
                                 .addComponent(lblUsername)
                                 .addComponent(lblPassword)
                                 .addComponent(lblAksi))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlKaryawanLayout.createSequentialGroup()
-                                    .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(12, 12, 12)
-                                    .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(txtNama))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(47, 47, 47)
+                            .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlKaryawanLayout.createSequentialGroup()
+                                    .addComponent(btnSimpan)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnEdit)
+                                    .addGap(28, 28, 28)
+                                    .addComponent(btnHapus)
+                                    .addGap(31, 31, 31)
+                                    .addComponent(btnReset)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(txtKonfirmPass)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtNama, javax.swing.GroupLayout.Alignment.TRAILING)))
                         .addComponent(scrKaryawan)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -820,6 +829,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPassword)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblKonfirmasiPassword)
+                    .addComponent(txtKonfirmPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlKaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpan)
@@ -827,13 +840,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addComponent(btnHapus)
                     .addComponent(btnReset)
                     .addComponent(lblAksi))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addGap(5, 5, 5)
                 .addComponent(lblDataKaryawan)
-                .addGap(9, 9, 9)
-                .addComponent(scrKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlKaryawan, "card3");
@@ -1518,24 +1531,24 @@ public class DashboardAdmin extends javax.swing.JFrame {
                         .addComponent(logo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblHrisProgram)
-                        .addGap(14, 14, 14)
-                        .addComponent(btnDashboard)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDataKaryawan)
-                        .addGap(14, 14, 14)
-                        .addComponent(btnDataPresensi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCutiIzin)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDaftarPekerjaan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLaporan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPengaturan)
+                        .addGap(19, 19, 19)
+                        .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDataKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDataPresensi, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCutiIzin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDaftarPekerjaan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPengaturan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblNamaAdmin)
                         .addGap(18, 18, 18)
-                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -1626,37 +1639,44 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
             try {
-        // 1. Validasi form kosong
-        if(txtNama.getText().equals("") || txtUsername.getText().equals("") || txtPassword.getText().equals("")) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Semua kolom (Nama, Username, Password) wajib diisi!");
-            return; 
-        }
+                // 1. Ambil teks dari form
+                String nama = txtNama.getText();
+                String username = txtUsername.getText();
+                String pass = new String(txtPassword.getPassword()); 
+                String konfirm = new String(txtKonfirmPass.getPassword()); 
 
-        // 2. Query Insert ke Database
-        String sql = "INSERT INTO karyawan (nama_lengkap, username, password, role, sisa_cuti) VALUES (?, ?, ?, 'karyawan', 12)";
+                // 2. Validasi form kosong
+                if(nama.isEmpty() || username.isEmpty() || pass.isEmpty() || konfirm.isEmpty()) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Semua kolom wajib diisi!");
+                    return; 
+                }
 
-        java.sql.Connection conn = KoneksiDB.getKoneksi();
-        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, txtNama.getText());
-        pst.setString(2, txtUsername.getText());
-        pst.setString(3, hashPassword(txtPassword.getText()));
+                // 3. Validasi Kecocokan Password
+                if (!pass.equals(konfirm)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Password dan Konfirmasi Password tidak cocok!");
+                    return;
+                }
 
-        pst.execute(); // Eksekusi query
+                // 4. Query Insert ke Database (Password di-Hash)
+                String sql = "INSERT INTO karyawan (nama_lengkap, username, password, role, sisa_cuti) VALUES (?, ?, ?, 'karyawan', 12)";
 
-        // 3. Notifikasi sukses dan refresh/bersihkan layar
-        javax.swing.JOptionPane.showMessageDialog(this, "Data Karyawan Baru Berhasil Disimpan!");
+                java.sql.Connection conn = KoneksiDB.getKoneksi();
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, nama);
+                pst.setString(2, username);
+                pst.setString(3, hashPassword(pass)); // Memanggil mesin pengacak
 
-        // Refresh tabel agar data baru langsung muncul
-        loadTableKaryawan();
+                pst.execute(); 
 
-        // Kosongkan form input
-        txtNama.setText("");
-        txtUsername.setText("");
-        txtPassword.setText("");
+                javax.swing.JOptionPane.showMessageDialog(this, "Data Karyawan Baru Berhasil Disimpan!");
 
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data (Mungkin Username sudah terpakai):\n" + e.getMessage());
-    }
+                // Refresh tabel dan bersihkan form
+                loadTableKaryawan();
+                btnResetActionPerformed(evt); 
+
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data (Mungkin Username sudah terpakai):\n" + e.getMessage());
+            }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void tblKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKaryawanMouseClicked
@@ -1675,53 +1695,64 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_tblKaryawanMouseClicked
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-    txtNama.setText("");
-    txtUsername.setText("");
-    txtPassword.setText("");
-    idKaryawanTerpilih = "";
-    tblKaryawan.clearSelection();   
+            txtNama.setText("");
+            txtUsername.setText("");
+            txtPassword.setText("");
+            txtKonfirmPass.setText("");
+            idKaryawanTerpilih = ""; 
+            tblKaryawan.clearSelection(); 
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        try {
-    // Cegah jika belum ada data yang dipilih
-    if (idKaryawanTerpilih.equals("")) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Silakan klik data di tabel terlebih dahulu!");
-        return;
-    }
-    
-    java.sql.Connection conn = KoneksiDB.getKoneksi();
-    String sql = "";
-    java.sql.PreparedStatement pst;
-    
-    // Cek apakah kolom password diisi atau dibiarkan kosong
-    if (txtPassword.getText().equals("")) {
-        // Jika kosong, update Nama dan Username saja
-        sql = "UPDATE karyawan SET nama_lengkap = ?, username = ? WHERE id = ?";
-        pst = conn.prepareStatement(sql);
-        pst.setString(1, txtNama.getText());
-        pst.setString(2, txtUsername.getText());
-        pst.setString(3, idKaryawanTerpilih);
-    } else {
-        // Jika password diisi, update semuanya
-        sql = "UPDATE karyawan SET nama_lengkap = ?, username = ?, password = ? WHERE id = ?";
-        pst = conn.prepareStatement(sql);
-        pst.setString(1, txtNama.getText());
-        pst.setString(2, txtUsername.getText());
-        pst.setString(3, hashPassword(txtPassword.getText()));
-        pst.setString(4, idKaryawanTerpilih);
-    }
-    
-    pst.execute();
-    javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil diubah!");
-    
-    // Refresh tabel dan bersihkan form
-    loadTableKaryawan();
-    btnResetActionPerformed(evt);
-    
-} catch (Exception e) {
-    javax.swing.JOptionPane.showMessageDialog(this, "Perubahan gagal: " + e.getMessage());
-}
+            try {
+                if (idKaryawanTerpilih.equals("")) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Silakan klik data di tabel terlebih dahulu!");
+                    return;
+                }
+
+                String nama = txtNama.getText();
+                String username = txtUsername.getText();
+                String pass = new String(txtPassword.getPassword());
+                String konfirm = new String(txtKonfirmPass.getPassword());
+
+                java.sql.Connection conn = KoneksiDB.getKoneksi();
+                String sql = "";
+                java.sql.PreparedStatement pst;
+
+                // Cek apakah kolom password dibiarkan kosong
+                if (pass.isEmpty() && konfirm.isEmpty()) {
+                    // Jika kosong, update Nama dan Username saja
+                    sql = "UPDATE karyawan SET nama_lengkap = ?, username = ? WHERE id = ?";
+                    pst = conn.prepareStatement(sql);
+                    pst.setString(1, nama);
+                    pst.setString(2, username);
+                    pst.setString(3, idKaryawanTerpilih);
+                } else {
+                    // Jika password diisi, pastikan konfirmasinya cocok
+                    if (!pass.equals(konfirm)) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Gagal: Password dan Konfirmasi Password tidak cocok!");
+                        return;
+                    }
+
+                    // Update semuanya beserta password baru yang di-Hash
+                    sql = "UPDATE karyawan SET nama_lengkap = ?, username = ?, password = ? WHERE id = ?";
+                    pst = conn.prepareStatement(sql);
+                    pst.setString(1, nama);
+                    pst.setString(2, username);
+                    pst.setString(3, hashPassword(pass));
+                    pst.setString(4, idKaryawanTerpilih);
+                }
+
+                pst.execute();
+                javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil diubah!");
+
+                // Refresh tabel dan bersihkan form
+                loadTableKaryawan();
+                btnResetActionPerformed(evt); 
+
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Perubahan gagal: " + e.getMessage());
+            }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
@@ -2162,6 +2193,10 @@ if (baris != -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Terjadi kesalahan sistem: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSimpanKeamananActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
     
     private void loadProfilPerusahaan() {
         try {
@@ -2415,6 +2450,7 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JLabel lblFotoBukti;
     private javax.swing.JLabel lblHadir;
     private javax.swing.JLabel lblHrisProgram;
+    private javax.swing.JLabel lblKonfirmasiPassword;
     private javax.swing.JLabel lblNamaAdmin;
     private javax.swing.JLabel lblNamaLengkap;
     private javax.swing.JLabel lblNamaPerusahaan;
@@ -2473,6 +2509,7 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JFormattedTextField txtJamKeluar;
     private javax.swing.JFormattedTextField txtJamMasuk;
     private javax.swing.JLabel txtKaryawan;
+    private javax.swing.JPasswordField txtKonfirmPass;
     private javax.swing.JPasswordField txtKonfirmasiPassword;
     private javax.swing.JTextField txtKuotaCuti;
     private javax.swing.JLabel txtLaporan;
@@ -2480,7 +2517,7 @@ private void loadTableLaporan(String bulan, String tahun) {
     private javax.swing.JTextField txtLongitude;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtNamaPerusahaan;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JPasswordField txtPasswordBaru;
     private javax.swing.JPasswordField txtPasswordLama;
     private javax.swing.JLabel txtPengaturan;
